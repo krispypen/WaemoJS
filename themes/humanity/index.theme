@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-Hildon-Metatheme
+Name=Humanity
+Icon=/usr/share/themes/humanity/images/qgn_plat_theme_thumbnail.png
+Encoding=UTF-8
+
+[X-Hildon-Metatheme]
+GtkTheme=humanity
+IconTheme=humanity_icons
+X-MatchboxTheme=humanity
+X-AdditionalRCFiles=maemo_af_desktop
+X-OperaSkin=default.zip

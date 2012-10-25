@@ -1,0 +1,48 @@
+<html>
+<head>
+	<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
+	<style>
+		html {
+			font-family: arial;
+		}
+		body {
+			background-color: rgba(60,59,55,0.5);
+		}
+		.icondiv {
+			float:left;
+			margin:44px 44px 25px 44px;
+			color:white;
+			cursor:pointer;
+		}
+		.icondiv img{
+			width:64px;
+			height:64px;
+		}
+		.iconlabel {
+			text-align: center;
+			padding-top: 10px
+		}
+	
+	</style>
+</head>
+	<body onclick="parent.AppList.hide()">
+		<div class="list">
+			<div class="icondiv" onclick="parent.startApp('calculator/calculator')">
+				<img src="themes/humanity/humanity_icons/64x64/hildon/tasklaunch_calculator.png" />
+				<div class="iconlabel">Calculator</div>
+			</div>
+			<div class="icondiv" onclick="parent.startApp('notes/notes')">
+				<img src="themes/humanity/humanity_icons/128x128/mimetypes/libreoffice-oasis-text.png" />
+				<div class="iconlabel">Notes</div>
+			</div>
+			<div class="icondiv" onclick="parent.startApp('camera/camera')">
+				<img src="themes/humanity/humanity_icons/64x64/hildon/tasklaunch_camera.png" />
+				<div class="iconlabel">Camera</div>
+			</div>
+			<div class="icondiv" onclick="parent.startApp('files/files')">
+				<img src="themes/humanity/humanity_icons/64x64/hildon/tasklaunch_camera.png" />
+				<div class="iconlabel">Files</div>
+			</div>
+		</div>
+	</body>
+</html>

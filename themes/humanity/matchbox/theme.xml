@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<theme name="Oops, we need a wm on startup as well.." author="Nokia"
+       desc="" version="1.0" engine_version="1" >
+
+<!-- *** Need to substitute colors from template here! -->
+
+<!--<color id="DefaultBackgroundColor"   def="#333333" />-->
+<color id="DefaultTextColor"   def="#ffffff" />
+<color id="TitleTextColor"   def="#ffffff" />
+
+<color id="black"   def="#000000ff" />
+<color id="white"   def="#ffffffff" />
+
+<font id="titlefont" def="Opal 33px" />
+<font id="menufont" def="Opal bold 12px" />
+
+<pixmap id="titleBarTile" filename="../images/wmTitleBar.png" />
+<pixmap id="dialogTitleBarTile" filename="../images/wmDialogCenter.png" />
+
+<!--<pixmap id="titlebar-dialog-left" filename="../images/wmTitleBarTile.png" />  
+<pixmap id="titlebar-dialog-center" filename="../images/wmTitleBarLeftEdge.png" />  
+<pixmap id="titlebar-dialog-right" filename="../images/wmTitleBarLeftEdge.png" />-->
+
+<!-- Main windows title bar. You need to define its height -->
+<frame id="main" height="56">
+  <layer x="0" y="0" w="800" h="56"
+     type="pixmap" pixmap="titleBarTile"/>
+  <layer x="0" y="16" w="100%" h="33"
+     type="label" color="TitleTextColor" justify="center" font="titlefont" />
+  <!-- Define the area that launches application menu -->
+  <!--<button x="3" y="0" w="315" h="60" action="custom" options="inputonly,pressonly" />-->
+</frame>
+
+
+<frame id="dialog" height="46" >
+  <layer x="0" y="0" w="800" h="46"
+     type="pixmap" pixmap="dialogTitleBarTile"/>
+  <layer x="0" y="10" w="100%" h="33"
+     type="label" color="DefaultTextColor" justify="center" font="titlefont" />
+
+  <!--<layer x="0" y="0" w="8" h="59"
+     type="pixmap" pixmap="titlebar-dialog-left"/>
+  <layer x="8" y="0" w="100%-16" h="59"
+     type="pixmap" pixmap="titlebar-dialog-center"/>
+  <layer x="100%-8" y="0" w="8" h="59"
+     type="pixmap" pixmap="titlebar-dialog-right"/>
+  <layer x="124" y="16" w="100%-48" h="30"
+     type="label" color="DefaultTextColor" justify="left" font="titlefont" />-->
+</frame>
+
+</theme>

@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<theme name="devel" author="Daniel Borgmann, danielb@openismus.com"
+       desc="" version="1.0" engine-version="2" engine-type="hildon">
+  
+  <img src="../images/WindowManagerStuff.png" />
+  
+  <client type="app">
+    
+    <decor type="north" show-title="yes"
+	   color-fg="#ffffff"
+	   font-family="Opal" font-size="24"
+	   template-x="22" template-y="162"
+	   template-width="112" template-height="56"
+	   template-pad-offset="0" template-pad-length="10">
+      <button type="close" packing="end"
+	      template-active-x="359" template-active-y="345"
+	      template-inactive-x="359" template-inactive-y="289"
+	      width="112" height="56"/>
+      <button type="back" packing="end"
+	      template-active-x="248" template-active-y="345"
+	      template-inactive-x="248" template-inactive-y="289"
+	      width="112" height="56"/>
+    </decor>
+  </client>
+
+  <client type="dialog">
+    <decor type="north" show-title="yes"
+	   color-fg="#ffffff"
+	   font-family="Opal" font-size="24"
+	   template-x="823" template-y="367"
+	   template-width="112" template-height="46"/>
+  </client>
+  
+<client type="application-menu">
+    <img src="../images/ViewMenu.png"/>
+    <decor type="north"
+           template-x="0" template-y="0"                        
+           template-width="42" template-height="0"/>    
+    <decor type="south"
+           template-x="0" template-y="18"
+           template-width="42" template-height="16"/>
+    <decor type="west"
+           template-x="0" template-y="10"
+           template-width="16" template-height="2"/>
+    <decor type="east"
+           template-x="26" template-y="10"
+           template-width="16" template-height="2"/>
+</client>
+<client type="status-menu">
+    <img src="../images/ViewMenu.png"/>
+    <decor type="north"
+           template-x="0" template-y="0"                        
+           template-width="42" template-height="0"/>    
+    <decor type="south"
+           template-x="0" template-y="18"
+           template-width="42" template-height="16"/>
+    <decor type="west"
+           template-x="0" template-y="10"
+           template-width="16" template-height="2"/>
+    <decor type="east"
+           template-x="26" template-y="10"
+           template-width="16" template-height="2"/>
+</client>
+
+<client type="menu">
+    <img src="../images/ContextMenu.png"/>
+    <decor type="north"
+           template-x="0" template-y="0"                        
+           template-width="42" template-height="16"/>    
+    <decor type="south"
+           template-x="0" template-y="26"
+           template-width="42" template-height="16"/>
+    <decor type="west"
+           template-x="0" template-y="16"
+           template-width="16" template-height="2"/>
+    <decor type="east"
+           template-x="26" template-y="16"
+           template-width="16" template-height="2"/>
+</client>
+
+</theme>

@@ -1,0 +1,5223 @@
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+pixmap_path "/usr/share/themes/humanity/images"
+gtk-theme-name = "Humanity"
+gtk-icon-theme-name = "humanity_icons"
+
+style "osso-default"
+{
+  # 'fg' = foreground in state, 'bg' = background in given state
+  # 'text' = text color in state, 'base' = text background in state
+  # styles:
+  #   NORMAL:      normal widget state
+  #   PRELIGHT:    e.g. mouse over
+  #   ACTIVE:      active widget part, e.g. pressed scrollbar trough
+  #   SELECTED:    data selection highlight color, e.g. items in list widget
+  #   INSENSITIVE: disabled widget
+
+# global picture theming.
+  GtkWidget::hildon-focus-handling = 1
+  GtkWidget::focus-line-width = 0
+  GtkWidget::focus-padding = 0
+  GtkWidget::focus-line-pattern = "\0\0\0\0\0\0\0\0"
+
+# Removed because this changes wrapping and results in incorrect wrapping
+# (and truncating) in dialogs.
+
+  GtkWidget::scroll-arrow-hlength = 20
+  GtkWidget::scroll-arrow-vlength = 20
+
+
+  engine "sapwood"
+  {
+    # selected text in entries, text widget, lists and trees
+    image
+      {
+	function = BOX
+	detail = "selection"
+	file = "../images/qgn_plat_focus_active.png"
+	border = { 2, 2, 2, 2 }
+      }
+    image
+      {
+        function = FOCUS
+      }
+  }
+
+  GtkArrow::arrow-scaling = 1.0
+
+}
+class "GtkWidget" style "osso-default"
+
+
+# recolorable=TRUE in the 'image' section means that the
+# image is grayscale and can be colored.
+
+#################################################### 
+# ABOUT STYLES
+#
+# The way that multiple RC styles bound to the same 
+# widget are prioritized is that RC styles bound with 
+# widget take precedence over RC styles bound with 
+# widget_class, which, in turn, take precedence over 
+# RC styles bound with class. For multiple declarations 
+# of the same type, later declarations take precedence 
+# over earlier ones.
+#################################################### 
+
+###########
+# PROBABLY WON'T BE USED
+###########
+
+###########
+# NEED TO BE PROCESSED
+###########
+
+# Uncomment these lines to get the tap-and-hold functionality
+# enabled with selected widget, (n.b. that you'll have to run
+# the hildon-tap-hold.diff to GTK to get it work)
+#style "hildon-tap-hold"
+#{
+#  GtkWidget::tap-hold = 1
+#}
+#class "GtkEntry" style "hildon-tap-hold"
+#class "GtkTextView" style "hildon-tap-hold"	
+
+#################
+# REAL, FINISHED STUFF.
+#################
+
+#This has to be first because of font styles.
+
+# Some HIG-alike stuff
+gtk-button-images = 0
+gtk-entry-select-on-focus = 0
+gtk-toolbar-style = GTK_TOOLBAR_ICONS
+hildon-keyboard-shortcuts = 0
+gtk-enable-mnemonics = 0
+
+# Icon sizes
+gtk-toolbar-icon-size = GTK_ICON_SIZE_LARGE_TOOLBAR
+gtk-icon-sizes = "gtk-menu=26,26:gtk-button=48,48:gtk-small-toolbar=48,48:gtk-large-toolbar=48,48:gtk-dnd=26,26:gtk-dialog=48,48:"
+
+# Disable cursor blinking, save a tree
+gtk-cursor-blink = 0
+
+gtk-double-click-distance = 42
+gtk-double-click-time = 360
+
+# Maemo af desktop widgets included in gtkrc.maemo_af_desktop
+
+##################
+# THESE HAVE MISSING IMAGES BUT ARE HERE BECAUSE OF STYLE PROPERTIES
+##################
+
+# BINDINGS
+
+binding "combo"
+{
+  bind "Left"  { "move-active" (step-up) }
+  bind "Right" { "move-active" (step-down) }
+  unbind "Up"
+  unbind "Down"
+}
+
+class "GtkComboBox" binding "combo"
+
+binding "dialog"
+{
+  bind "Up"    { "move-focus" (tab-backward) }
+  bind "Down"  { "move-focus" (tab-forward)  }
+}
+
+class "GtkDialog" binding "dialog"
+
+binding "buttonbox"
+{
+  bind "Left"  { "move-focus" (tab-backward) }
+  bind "Up"    { "move-focus" (tab-backward) }
+  bind "Right" { "move-focus" (tab-forward)  }
+  bind "Down"  { "move-focus" (tab-forward)  }
+}
+
+class "GtkHButtonBox" binding "buttonbox"
+class "GtkVButtonBox" binding "buttonbox"
+
+binding "treeview"
+{
+  bind "Left"  { "expand-collapse-cursor-row" (1, 0, 0) }
+  bind "Right" { "expand-collapse-cursor-row" (1, 1, 0) }
+  unbind "<control>F"
+  unbind "<control>f"
+}
+
+class "GtkTreeView" binding "treeview"
+
+# Stop Menu key from popping up entry/textview context menus
+binding "entry+textview"
+{
+  unbind "Menu"
+}
+
+class "GtkEntry" binding "entry+textview"
+class "GtkTextView" binding "entry+textview"
+
+# Fix Esc key for GtkMenus
+binding "menu-escape"
+{
+  bind "Escape" { "move-current" (parent) }
+}
+
+class "GtkMenu" binding "menu-escape"
+
+#Make F4 close the menu
+binding "menu-f4"
+{
+  bind "F4" { "cancel" () }
+}
+
+class "GtkMenu" binding "menu-f4"
+
+# Unbind default cycle-handle-focus keys F6 (Fullscreen) and F8 (Decrease)
+binding "paned-cycle-focus"
+{
+  unbind "F6"
+  unbind "F8"
+}
+
+class "GtkPaned" binding "paned-cycle-focus"
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+# theme specific stuff here. Included by gtkrc.
+
+##############################
+#
+# Logical color definitions
+#
+##############################
+
+style "osso-logical-colors" {
+      
+# text colors
+	color["DefaultTextColor"]        = "#ffffff"
+	color["SecondaryTextColor"]      = "#999999"
+	color["ActiveTextColor"]     	 = "#f47500"
+	color["DisabledTextColor"]       = "#666666"
+	color["PaintedTextColor"] 	 = "#241100"
+
+# special cases when we need dark text on light background..
+	color["ReversedTextColor"]          = "#000000"
+	color["ReversedSecondaryTextColor"] = "#808080"
+	color["ReversedActiveTextColor"]    = "#f47500"
+	color["ReversedDisabledTextColor"]  = "#999999"
+	color["ReversedPaintedTextColor"]   = "#ffffff"
+
+# background colors
+	color["DefaultBackgroundColor"]   = "#101010"
+	color["DarkerBackgroundColor"]    = "#000000"
+	color["ReversedBackgroundColor"]  = "#ffffff"
+	color["SelectionColor"]           = "#f47500"
+	color["ReversedSelectionColor"]	  = "#f47500"
+
+# media /thumbnail /album cover views etc..
+	color["ContentBackgroundColor"]	 = "#000000"
+	color["ContentFrameColor"]	 = "#000000"
+        color["ContentSelectionColor"]	 = "#ffffff"
+
+# framework
+	color["TitleTextColor"]		  = "#ffffff"
+
+        color["ButtonTextColor"]	  = "#ffffff"
+        color["ButtonTextPressedColor"]	  = "#ffffff"
+        color["ButtonTextDisabledColor"]  = "#666666"
+        
+        color["AlphaKeyColor"]            = "#ff00ff"
+
+# crayons to play with
+	color["AccentColor1"]       = "#ff9a3d"
+	color["AccentColor2"]       = "#bf5b00"
+	color["AccentColor3"]       = "#bf5b00"
+	color["AttentionColor"]     = "#e3002a"
+
+# Notification Colors
+	color["NotificationBackgroundColor"] = "#efcb00"
+	color["NotificationTextColor"] = "#491b03"
+	color["NotificationSecondaryTextColor"] = "#783800"
+
+# evil hack
+       color["ComboboxBackgroundColor"]	= "#1f1f1f"
+}
+
+##############################
+#
+# Font definitions
+#
+##############################
+
+# legacy
+
+style "osso-SystemFont" {
+	font_name = "Nokia Sans 18"
+}
+
+style "osso-EmpSystemFont" {
+	font_name = "Nokia Sans Bold 18"
+}
+
+style "osso-LargeFont" {
+	font_name = "Nokia Sans 26"
+}
+
+style "osso-SmallFont" {
+	font_name = "Nokia Sans 13"
+}
+
+style "osso-HWRFont1"
+{
+  font_name = "Nokia Sans 52"
+}
+
+style "osso-HWRFont2"
+{
+  font_name = "Nokia Sans 38"
+}
+
+style "osso-TitleFont" {
+	font_name = "Nokia Sans 18"
+}
+
+style "osso-ButtonFont" {
+	font_name = "Nokia Sans 18"
+}
+
+###########################
+# new fonts for fremantle #
+###########################
+
+style "SystemFont" {
+	font_name = "Nokia Sans 18"
+}
+
+style "EmpSystemFont" {
+	font_name = "Nokia Sans Bold 18"
+}
+
+style "LargeSystemFont" {
+	font_name = "Nokia Sans 26"
+}
+
+style "SmallSystemFont" {
+	font_name = "Nokia Sans 13"
+}
+
+style "EmpSmallSystemFont" {
+	font_name = "Nokia Sans Bold 13"
+}
+
+style "X-LargeSystemFont" {
+	font_name = "Nokia Sans 31"
+}
+
+style "XX-LargeSystemFont" {
+	font_name = "Nokia Sans 52"
+}
+
+style "XXX-LargeSystemFont" {
+	font_name = "Nokia Sans 74"
+}
+
+style "HomeSystemFont" {
+	font_name = "Nokia Sans 15"
+}
+
+######################################
+#
+# Application menu popup position
+#
+# The position of application menu relative to application upper-left 
+# position (horizontal = 80, vertical = 60) so adjust below
+# horizontal-offset and vertical-offset to change it from the application
+# upper-left position. The values can be negative too.
+#
+######################################
+
+style "osso-application-menu-popup-position"
+{
+  GtkMenu::horizontal-offset = 10
+  GtkMenu::vertical-offset = -13
+}
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+class "GtkWidget" style "osso-logical-colors"
+
+style "osso-color-themeing" = "osso-logical-colors" {
+  fg[NORMAL] = @DefaultTextColor
+  bg[NORMAL] = @DefaultBackgroundColor
+
+  fg[PRELIGHT] = @DefaultTextColor
+  bg[PRELIGHT] = @DefaultBackgroundColor
+
+  fg[ACTIVE] = @DefaultTextColor
+  bg[ACTIVE] = @SelectionColor
+                                                                                                                                    
+  fg[SELECTED] = @DefaultTextColor
+  bg[SELECTED] = @SelectionColor
+                                                                                                                                     
+  fg[INSENSITIVE] = @DisabledTextColor
+  bg[INSENSITIVE] = @DefaultBackgroundColor
+                                                                                                                                     
+  text[NORMAL] = @DefaultTextColor
+  base[NORMAL] = @DefaultBackgroundColor
+                                                                                                                                     
+  text[PRELIGHT] = @DefaultTextColor
+  base[PRELIGHT] = @DefaultBackgroundColor
+                                                                                                                                     
+  text[ACTIVE] = @PaintedTextColor
+  base[ACTIVE] = @ReversedSelectionColor
+
+  text[SELECTED] = @PaintedTextColor
+  base[SELECTED] = @ReversedSelectionColor
+                                                                                                                                    
+  text[INSENSITIVE] = @DisabledTextColor
+  base[INSENSITIVE] = @DefaultBackgroundColor
+}
+class "GtkWidget" style "osso-color-themeing"
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+style "hildon-default-arrows"
+{
+  GtkArrow::maemo-min-size = 26
+
+  # different arrows in different states
+  engine "sapwood"
+  {
+
+    # left
+    image
+      {
+        function        = ARROW
+	state           = PRELIGHT
+	arrow_direction = LEFT
+	overlay_file    = "../images/qgn_plat_arrow_left_pressed.png"
+	overlay_stretch = FALSE
+      }
+image
+      {
+        function        = ARROW
+	state           = ACTIVE
+	arrow_direction = LEFT
+	overlay_file    = "../images/qgn_plat_arrow_left_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	state           = SELECTED
+	arrow_direction = LEFT
+	overlay_file    = "../images/qgn_plat_arrow_left_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	state           = INSENSITIVE
+	arrow_direction = LEFT
+	overlay_file    = "../images/qgn_plat_arrow_left_disabled.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	arrow_direction = LEFT
+	overlay_file    = "../images/qgn_plat_arrow_left_normal.png"
+	overlay_stretch = FALSE
+      }
+    
+    # right
+    image
+      {
+        function        = ARROW
+	state           = ACTIVE
+	arrow_direction = RIGHT
+	overlay_file    = "../images/qgn_plat_arrow_right_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	state           = PRELIGHT
+	arrow_direction = RIGHT
+	overlay_file    = "../images/qgn_plat_arrow_right_pressed.png"
+	overlay_stretch = FALSE
+      }
+     image
+      {
+        function        = ARROW
+	state           = SELECTED
+	arrow_direction = RIGHT
+	overlay_file    = "../images/qgn_plat_arrow_right_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	state           = INSENSITIVE
+	arrow_direction = RIGHT
+	overlay_file    = "../images/qgn_plat_arrow_right_disabled.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	arrow_direction = RIGHT
+	overlay_file    = "../images/qgn_plat_arrow_right_normal.png"
+	overlay_stretch = FALSE
+      }
+
+    # up
+    image
+      {
+        function        = ARROW
+	state           = ACTIVE
+	arrow_direction = UP
+	overlay_file    = "../images/qgn_plat_arrow_up_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	state           = PRELIGHT
+	arrow_direction = UP
+	overlay_file    = "../images/qgn_plat_arrow_up_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	state           = SELECTED
+	arrow_direction = UP
+	overlay_file    = "../images/qgn_plat_arrow_up_pressed.png"
+	overlay_stretch = FALSE
+      } 
+    image
+      {
+        function        = ARROW
+	state           = INSENSITIVE
+	arrow_direction = UP
+	overlay_file    = "../images/qgn_plat_arrow_up_disabled.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	arrow_direction = UP
+	overlay_file    = "../images/qgn_plat_arrow_up_normal.png"
+	overlay_stretch = FALSE
+      }
+    
+    # down
+    image
+      {
+        function        = ARROW
+	state           = ACTIVE
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_arrow_down_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	state           = PRELIGHT
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_arrow_down_pressed.png"
+	overlay_stretch = FALSE
+      }
+     image    
+      {
+        function        = ARROW
+	state           = SELECTED
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_arrow_down_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	state           = INSENSITIVE
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_arrow_down_disabled.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_arrow_down_normal.png"
+	overlay_stretch = FALSE
+      }
+  }
+}
+
+class "GtkWidget" style "hildon-default-arrows"
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+# Normal Button text color
+style "hildon-button-label" = "osso-color-themeing" {
+	fg[NORMAL] = @ButtonTextColor
+	fg[PRELIGHT] = @ButtonTextColor
+	fg[ACTIVE] = @ButtonTextPressedColor
+	fg[SELECTED] = @ButtonTextPressedColor
+	fg[INSENSITIVE] = @ButtonTextDisabledColor
+	text[NORMAL] = @ButtonTextColor
+	text[PRELIGHT] = @ButtonTextColor
+	text[ACTIVE] = @ButtonTextPressedColor
+	text[SELECTED] = @ButtonTextPressedColor
+	text[INSENSITIVE] = @ButtonTextDisabledColor
+}
+widget_class "*.<GtkButton>.GtkAlignment.GtkHBox.GtkLabel" style "osso-ButtonFont"
+widget_class "*.<GtkButton>.GtkAlignment.GtkHBox.GtkVBox.GtkLabel" style "hildon-button-label"
+widget_class "*.<GtkButton>.GtkAlignment.GtkHBox.GtkHBox.GtkLabel" style "hildon-button-label"
+widget_class "*.<GtkButton>.GtkHBox.GtkLabel" style "hildon-button-label"
+widget_class "*.<GtkButton>.GtkLabel" style "hildon-button-label"
+
+# Special case for check buttons, which are a subclass of gtkbutton for some reason
+style "osso-checkbutton-text-color" = "osso-color-themeing" {
+	fg[NORMAL] = @DefaultTextColor
+	fg[PRELIGHT] = @DefaultTextColor
+	fg[ACTIVE] = @DefaultTextColor
+	fg[SELECTED] = @DefaultTextColor
+	fg[INSENSITIVE] = @DisabledTextColor
+	text[NORMAL] = @DefaultTextColor
+	text[PRELIGHT] = @DefaultTextColor
+	text[ACTIVE] = @DefaultTextColor
+	text[SELECTED] = @DefaultTextColor
+	text[INSENSITIVE] = @DisabledTextColor
+}
+widget_class "*.<GtkCheckButton>.GtkLabel" style "osso-checkbutton-text-color"
+
+style "fremantle-button-common" {
+	GtkButton::inner-border = {8, 8, 7, 8}
+	GtkButton::default-border = {0, 0, 0, 0}
+	GtkButton::image-spacing = 8
+}
+
+
+style "fremantle-stylus-button" = "fremantle-button-common" {
+	xthickness = 7
+	ythickness = 0
+	
+	engine "sapwood" {
+		image {
+			function = BOX
+			detail   = "buttondefault"
+		}
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/StylusButtonPressed.png"
+			border   = { 16, 16, 14, 14 }
+		}
+		image {
+			function = BOX
+			state    = INSENSITIVE
+			file     = "../images/StylusButtonDisabled.png"
+			border   = { 16, 16, 14, 14 }
+		}
+		image {
+			function = BOX
+			file     = "../images/StylusButtonNormal.png"
+			border   = { 16, 16, 14, 14 }
+		}
+	}
+}
+class "GtkButton" style "fremantle-stylus-button"
+widget "*Button-stylus" style "fremantle-stylus-button"
+
+# Accented version of stylus/scalable button
+style "fremantle-accent-button" = "fremantle-button-common" {
+	xthickness = 7
+	ythickness = 0
+	
+	engine "sapwood" {
+		image {
+			function = BOX
+			detail   = "buttondefault"
+		}
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/AccentedStylusButtonPressed.png"
+			border   = { 16, 16, 14, 14 }
+		}
+		image {
+			function = BOX
+			state    = INSENSITIVE
+			file     = "../images/AccentedStylusButtonDisabled.png"
+			border   = { 16, 16, 14, 14 }
+		}
+		image {
+			function = BOX
+			file     = "../images/AccentedStylusButtonNormal.png"
+			border   = { 16, 16, 14, 14 }
+		}
+	}
+}
+widget "*hildon-accent-button" style "fremantle-accent-button"
+
+style "fremantle-finger-button"  = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+	
+	HildonButton::vertical-spacing = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			detail   = "buttondefault"
+		}
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/FingerButtonPressed.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			state    = INSENSITIVE
+			file     = "../images/FingerButtonDisabled.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			file     = "../images/FingerButtonNormal.png"
+			border   = { 16, 16, 0, 0 }
+		}
+	}
+}
+widget "*Button-finger" style "fremantle-finger-button"
+
+style "fremantle-thumb-button"  = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			detail   = "buttondefault"
+		}
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/ThumbButtonPressed.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			state    = INSENSITIVE
+			file     = "../images/ThumbButtonDisabled.png"
+			border   = { 16, 16, 0, 0 }
+		}
+			image {
+			function = BOX
+			file     = "../images/ThumbButtonNormal.png"
+			border   = { 16, 16, 0, 0 }
+		}
+	}
+}
+widget "*Button-thumb" style "fremantle-thumb-button"
+
+# Custom button size for portrait mode (90px).
+style "fremantle-portrait-button"  = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/PortraitButtonPressed.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			state    = INSENSITIVE
+			file     = "../images/PortraitButtonDisabled.png"
+			border   = { 16, 16, 0, 0 }
+		}
+			image {
+			function = BOX
+			file     = "../images/PortraitButtonNormal.png"
+			border   = { 16, 16, 0, 0 }
+		}
+	}
+}
+widget "*.hildon-portrait-button" style "fremantle-portrait-button"
+
+# Dialog Buttons
+style "fremantle-dialog-button"  = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			detail   = "buttondefault"
+		}
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/DialogButtonPressed.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			state    = INSENSITIVE
+			file     = "../images/DialogButtonDisabled.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			file     = "../images/DialogButtonNormal.png"
+			border   = { 16, 16, 0, 0 }
+		}
+	}
+}
+widget "*.hildon-dialog-action-area.GtkButton-finger" style "fremantle-dialog-button"
+
+# Accept and Reject buttons ("green" and "red")
+style "fremantle-accept-button-finger" = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/AcceptFingerButtonPressed.png"
+			border   = { 16, 16, 0, 0 }
+		}
+			image {
+			function = BOX
+			file     = "../images/AcceptFingerButtonNormal.png"
+			border   = { 16, 16, 0, 0 }
+		}
+	}
+}
+widget "*.hildon-accept-button-finger" style "fremantle-accept-button-finger"
+
+style "fremantle-accept-button-thumb" = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/AcceptThumbButtonPressed.png"
+			border   = { 16, 16, 0, 0 }
+		}
+			image {
+			function = BOX
+			file     = "../images/AcceptThumbButtonNormal.png"
+			border   = { 16, 16, 0, 0 }
+		}
+	}
+}
+widget "*.hildon-accept-button-thumb" style "fremantle-accept-button-thumb"
+
+style "fremantle-reject-button-finger" = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/RejectFingerButtonPressed.png"
+			border   = { 16, 16, 0, 0 }
+		}
+			image {
+			function = BOX
+			file     = "../images/RejectFingerButtonNormal.png"
+			border   = { 16, 16, 0, 0 }
+		}
+	}
+}
+widget "*.hildon-reject-button-finger" style "fremantle-reject-button-finger"
+
+style "fremantle-reject-button-thumb" = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/RejectThumbButtonPressed.png"
+			border   = { 16, 16, 0, 0 }
+		}
+			image {
+			function = BOX
+			file     = "../images/RejectThumbButtonNormal.png"
+			border   = { 16, 16, 0, 0 }
+		}
+	}
+}
+widget "*.hildon-reject-button-thumb" style "fremantle-reject-button-thumb"
+
+# Custom buttons used by call UI.
+
+style "fremantle-landscape-dialpad-button" = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/CallLandscapeDialButtonPressed.png"
+		}
+			image {
+			function = BOX
+			file     = "../images/CallLandscapeDialButtonNormal.png"
+		}
+	}
+}
+widget "*.hildon-landscape-dialpad.GtkButton" style "fremantle-landscape-dialpad-button"
+widget "*.hildon-landscape-dialpad-button" style "fremantle-landscape-dialpad-button"
+
+style "fremantle-portrait-dialpad-button" = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/CallPortraitDialButtonPressed.png"
+		}
+			image {
+			function = BOX
+			file     = "../images/CallPortraitDialButtonNormal.png"
+		}
+	}
+}
+widget "*.hildon-portrait-dialpad.GtkButton" style "fremantle-portrait-dialpad-button"
+widget "*.hildon-portrait-dialpad-button" style "fremantle-portrait-dialpad-button"
+
+style "fremantle-dtmf-landscape-dialpad-button" = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/CallDTMFLandscapeButtonPressed.png"
+		}
+			image {
+			function = BOX
+			file     = "../images/CallDTMFLandscapeButtonNormal.png"
+		}
+	}
+}
+widget "*.hildon-dtmf-landscape-dialpad.GtkButton" style "fremantle-dtmf-landscape-dialpad-button"
+widget "*.hildon-dtmf-landscape-dialpad-button" style "fremantle-dtmf-landscape-dialpad-button"
+
+style "fremantle-dtmf-back-button" = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/CallDTMFBackButtonPressed.png"
+		}
+			image {
+			function = BOX
+			file     = "../images/CallDTMFBackButtonNormal.png"
+		}
+	}
+}
+widget "*.hildon-dtmf-back-button" style "fremantle-dtmf-back-button"
+
+style "fremantle-dtmf-portrait-dialpad-button" = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/CallDTMFPortraitButtonPressed.png"
+		}
+			image {
+			function = BOX
+			file     = "../images/CallDTMFPortraitButtonNormal.png"
+		}
+	}
+}
+widget "*.hildon-dtmf-portrait-dialpad.GtkButton" style "fremantle-dtmf-portrait-dialpad-button"
+widget "*.hildon-dtmf-portrait-dialpad-button" style "fremantle-dtmf-portrait-dialpad-button"
+
+style "fremantle-landscape-call-button" = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/CallLandscapeCallButtonPressed.png"
+		}
+			image {
+			function = BOX
+			file     = "../images/CallLandscapeCallButtonNormal.png"
+		}
+	}
+}
+widget "*.hildon-landscape-call-button" style "fremantle-landscape-call-button"
+
+style "fremantle-portrait-call-button" = "fremantle-button-common" {
+	xthickness = 5
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/CallPortraitCallButtonPressed.png"
+		}
+			image {
+			function = BOX
+			file     = "../images/CallPortraitCallButtonNormal.png"
+		}
+	}
+}
+widget "*.hildon-portrait-call-button" style "fremantle-portrait-call-button"
+
+
+# A button group matches all ToggleButtons inside an HBox, and they have to be finger sized!
+style "fremantle-button-group-box" {
+	GtkWidget::maemo-position-theming = 1
+}
+class "GtkHBox" style "fremantle-button-group-box"
+
+style "fremantle-button-group" {
+	engine "sapwood" {
+		image {
+			function = BOX
+			position = LEFT, TOP, BOTTOM
+			state    = INSENSITIVE
+			file     = "../images/ButtonGroupHorizontalLeftDisabled.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			position = LEFT, TOP, BOTTOM
+			shadow   = IN
+			file     = "../images/ButtonGroupHorizontalLeftPressed.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			position = LEFT, TOP, BOTTOM
+			file     = "../images/ButtonGroupHorizontalLeftNormal.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		
+		image {
+			function = BOX
+			position = RIGHT, TOP, BOTTOM
+			state    = INSENSITIVE
+			file     = "../images/ButtonGroupHorizontalRightDisabled.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			position = RIGHT, TOP, BOTTOM
+			shadow   = IN
+			file     = "../images/ButtonGroupHorizontalRightPressed.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			position = RIGHT, TOP, BOTTOM
+			file     = "../images/ButtonGroupHorizontalRightNormal.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		
+		image {
+			function = BOX
+			state    = INSENSITIVE
+			file     = "../images/ButtonGroupHorizontalMiddleDisabled.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			shadow   = IN
+			file     = "../images/ButtonGroupHorizontalMiddlePressed.png"
+			border   = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			file     = "../images/ButtonGroupHorizontalMiddleNormal.png"
+			border   = { 16, 16, 0, 0 }
+		}
+	}
+}
+widget "*.GtkHBox.GtkToggleButton-finger" style "fremantle-button-group"
+widget "*.GtkHBox.GtkRadioButton-finger" style "fremantle-button-group"
+widget "*.GtkHBox.GtkCheckButton-finger" style "fremantle-button-group"
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-hbuttonbox" {
+
+  GtkHButtonBox::child_min_height = 47
+  GtkHButtonBox::child_min_width = 105
+  GtkWidget::maemo-position-theming = 1
+}
+class "GtkHButtonBox" style "osso-hbuttonbox"
+
+style "osso-vbuttonbox" {
+
+  GtkVButtonBox::child_min_height = 47
+  GtkVButtonBox::child_min_width = 105
+  GtkWidget::maemo-position-theming = 1
+}
+class "GtkVButtonBox" style "osso-vbuttonbox"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+# Theming for GtkCellView
+
+style "osso-cellview"
+{
+  engine "sapwood"
+  {
+    image
+      {
+        function        = CHECK
+        state           = INSENSITIVE
+        shadow          = IN
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_disabled.png"
+        
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = CHECK
+        state           = SELECTED
+        shadow          = IN
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_focused.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = ACTIVE
+        shadow          = IN
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_focused.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = PRELIGHT
+        shadow          = IN
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_normal.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = NORMAL
+        shadow          = IN
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_normal.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = INSENSITIVE
+        shadow          = OUT
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_disabled.png"
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = CHECK
+        state           = SELECTED
+        shadow          = OUT
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_focused.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = ACTIVE
+        shadow          = OUT
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_focused.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = PRELIGHT
+        shadow          = OUT
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_normal.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = NORMAL
+        shadow          = OUT
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_normal.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = NORMAL
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_normal.png"
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = CHECK
+        state           = PRELIGHT
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_normal.png"
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = CHECK
+        state           = ACTIVE
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_normal.png"
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = CHECK
+        state           = SELECTED
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_normal.png"
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = CHECK
+        state           = INSENSITIVE
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_normal.png"
+        overlay_stretch = FALSE
+      }
+  }
+}
+class "GtkCellView" style "osso-cellview"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+style "fremantle-checkbutton"
+{
+	HildonCheckButton::checkbox-size = 38
+	GtkButton::inner-border = {4, 10, 0, 0}
+	GtkButton::image-spacing = 4
+}
+class "HildonCheckButton" style "fremantle-checkbutton"
+
+style "fremantle-checkbutton-cell"
+{
+	ythickness = 0
+
+	engine "sapwood"
+	{
+		image
+		{
+			function        = CHECK
+			shadow          = OUT
+			state           = INSENSITIVE
+			file            = "../images/CheckButtonUncheckedDisabled.png"
+		}
+		image
+		{
+			function        = CHECK
+			shadow          = IN
+			state           = INSENSITIVE
+			file            = "../images/CheckButtonCheckedDisabled.png"
+		}
+		image
+		{
+			function        = CHECK
+			shadow          = OUT
+			file            = "../images/CheckButtonUnchecked.png"
+		}
+		image
+		{
+			function        = CHECK
+			shadow          = IN
+			file            = "../images/CheckButtonChecked.png"
+		}
+		image
+		{
+			function = FOCUS
+		}
+	}
+}
+widget_class "*.<HildonCheckButton>.GtkAlignment.GtkHBox.GtkCellView" style "fremantle-checkbutton-cell"
+
+style "osso-checkbutton"
+{
+	GtkCheckButton::indicator-size = 26
+	GtkCheckButton::indicator-spacing = 2
+	GtkWidget::interior-focus = 0
+
+	ythickness = 0
+
+	engine "sapwood"
+	{	
+		image
+		{
+			function        = CHECK
+			shadow          = OUT
+			state           = INSENSITIVE
+			overlay_file    = "../images/qgn_plat_check_box_empty_disabled.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = CHECK
+			shadow          = IN
+			state           = INSENSITIVE
+			overlay_file    = "../images/qgn_plat_check_box_selected_disabled.png"
+			overlay_stretch = FALSE
+		}	
+		image
+		{
+			function        = CHECK
+			shadow          = OUT
+			overlay_file    = "../images/qgn_plat_check_box_empty_normal.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = CHECK
+			shadow          = IN
+			overlay_file    = "../images/qgn_plat_check_box_selected_normal.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function = FOCUS
+		}
+	}
+}
+class "GtkCheckButton" style "osso-checkbutton"
+
+widget_class "*.GtkCheckButton.GtkLabel" style "osso-SystemFont"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-menucheck"
+{
+
+  GtkCheckMenuItem::indicator_size = 26
+  engine "sapwood"
+  {
+    image
+      {
+        function        = CHECK
+	shadow          = IN
+	state           = INSENSITIVE
+	overlay_file    = "../images/qgn_plat_menu_check_mark_disabled.png"
+      }
+    image
+      {
+        function        = CHECK
+	shadow          = IN
+	state           = ACTIVE
+	overlay_file    = "../images/qgn_plat_menu_check_mark_focus.png"
+      }
+    image
+      {
+        function        = CHECK
+	shadow          = IN
+	state           = PRELIGHT
+	overlay_file    = "../images/qgn_plat_menu_check_mark_focus.png"
+      }
+    image
+      {
+        function        = CHECK
+	shadow          = IN
+	state           = SELECTED
+	overlay_file    = "../images/qgn_plat_menu_check_mark_focus.png"
+      }
+    image
+      {
+        function        = CHECK
+	shadow          = IN
+	overlay_file    = "../images/qgn_plat_menu_check_mark_normal.png"
+      }
+    image
+      {
+        function        = OPTION
+	shadow          = IN
+	state           = INSENSITIVE
+	overlay_file    = "../images/qgn_plat_menu_button_radio_disabled.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = OPTION
+	shadow          = IN
+	state           = ACTIVE
+	overlay_file    = "../images/qgn_plat_menu_button_radio_focus.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = OPTION
+	shadow          = IN
+	state           = PRELIGHT
+	overlay_file    = "../images/qgn_plat_menu_button_radio_focus.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = OPTION
+	shadow          = IN
+	state           = SELECTED
+	overlay_file    = "../images/qgn_plat_menu_button_radio_focus.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = OPTION
+	shadow          = IN
+	overlay_file    = "../images/qgn_plat_menu_button_radio_normal.png"
+	overlay_stretch = FALSE
+      }
+  }
+}
+class "GtkCheckMenuItem" style "osso-menucheck"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-dialog" {
+  GtkContainer::border-width = 0
+  GtkDialog::button-spacing = 0
+  GtkDialog::content-area-border = 0
+  GtkDialog::action-area-border = 0
+  GtkDialog::inner-spacing = 16
+  GtkDialog::padding = {16, 16, 0, 8}
+}
+class "GtkDialog" style "osso-dialog"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-entry" = "osso-color-themeing" {
+	xthickness = 4
+	ythickness = 0
+
+	GtkWidget::interior-focus = 1
+	GtkEntry::inner-border = { 4, 4, 4, 4 }
+	GtkEntry::state-hint = 1
+
+	text[NORMAL] = @ReversedTextColor
+	text[INSENSITIVE] = @ReversedDisabledTextColor
+
+	engine "sapwood" {
+		image {
+			function = SHADOW
+			state = INSENSITIVE
+			file = "../images/single_line_input_frame_disabled.png"
+			border = { 5, 5, 5, 5 }
+		}
+		image {
+			function = SHADOW
+			state = ACTIVE
+			file = "../images/single_line_input_frame_focused.png"
+			border = { 5, 5, 5, 5 }
+		}
+		image {
+			function = SHADOW
+			state = NORMAL
+			file = "../images/single_line_input_frame.png"
+			border = { 5, 5, 5, 5 }
+		}
+	
+		image {
+			function = FLAT_BOX
+			shadow = NONE
+			state = INSENSITIVE
+			file = "../images/single_line_input_disabled.png"
+			border = { 1, 1, 5, 5 }
+		}
+		image {
+			function = FLAT_BOX
+			shadow = NONE
+			state = ACTIVE
+			file = "../images/single_line_input_focused.png"
+			border = { 1, 1, 5, 5 }
+		}
+		image {
+			function = FLAT_BOX
+			shadow = NONE
+			state = NORMAL
+			file = "../images/single_line_input.png"
+			border = { 1, 1, 5, 5 }
+		}
+	}
+}
+class "GtkEntry" style "osso-entry"
+
+style "fremantle-entry" = "osso-color-themeing" {  
+	xthickness = 16
+	ythickness = 0
+
+	GtkWidget::interior-focus = 1
+	GtkEntry::inner-border = { 0, 0, 16, 16 }
+	GtkEntry::state-hint = 1
+
+	text[NORMAL] = @ReversedTextColor
+	text[INSENSITIVE] = @ReversedDisabledTextColor
+
+	engine "sapwood" {
+		image {
+			function = SHADOW
+			state = INSENSITIVE
+			file = "../images/TextInputFrameDisabled.png"
+			border = { 18, 18, 18, 18 }
+		}
+		image {
+			function = SHADOW
+			state = ACTIVE
+			file = "../images/TextInputFrameFocused.png"
+			border = { 18, 18, 18, 18 }
+		}
+		image {
+			function = SHADOW
+			state = NORMAL
+			file = "../images/TextInputFrame.png"
+			border = { 18, 18, 18, 18 }
+		}
+
+		image {
+			function = FLAT_BOX
+			shadow = NONE
+			state = INSENSITIVE
+			file = "../images/TextInputDisabled.png"
+			border = { 12, 12, 18, 18 }
+		}
+		image {
+			function = FLAT_BOX
+			shadow = NONE
+			state = ACTIVE
+			file = "../images/TextInputFocused.png"
+			border = { 12, 12, 18, 18 }
+		}
+		image {
+			function = FLAT_BOX
+			shadow = NONE
+			state = NORMAL
+			file = "../images/TextInput.png"
+			border = { 12, 12, 18, 18 }
+		}
+		image
+		{
+			function = BOX
+			detail = "entry-progress"
+			file = "../images/TextInputProgress.png"
+			border = { 12, 12, 18, 18 }
+		}
+	}
+}
+class "HildonEntry" style "fremantle-entry"
+
+style "placeholder-text" = "fremantle-entry" {
+	text[NORMAL] = @ReversedSecondaryTextColor
+}
+widget "*.hildon-entry-placeholder" style "placeholder-text"
+
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "fremantle-frame"
+{
+	xthickness = 0
+	ythickness = 0
+
+	engine "sapwood"
+	{
+		image
+		{
+		function = SHADOW
+		}
+		image
+		{
+			function = SHADOW_GAP
+		}
+		image
+		{
+			function = BOX
+			detail = "frame-label"
+			file = "../images/GroupTitle.png"
+			border = { 10, 10, 0, 0 }
+		}
+		image
+		{
+			function = BOX
+			detail = "frame-label-background"
+			file = "../images/GroupTitleBackground.png"
+			border = { 10, 10, 0, 0 }
+		}
+	}
+}
+class "GtkFrame" style "fremantle-frame"
+
+style "fremantle-frame-label" = "osso-color-themeing"
+{
+	fg[NORMAL] = @SecondaryTextColor
+	
+	# EmpSmallSystemFont
+	#font_name = "Nokia Sans Bold 13"
+	
+	engine "sapwood"
+	{
+		shadowcolor=@ReversedTextColor
+	}
+}
+widget_class "*.GtkFrame.GtkLabel" style "fremantle-frame-label"
+
+
+style "fremantle-framed-window"
+{
+	engine "sapwood"
+	{
+		image
+		{
+			function = FLAT_BOX
+			file     = "../images/wmFrame.png"
+			border   = { 3, 3, 3, 3 }
+		}
+	}
+}
+widget "hildon-framed-window" style "fremantle-framed-window"
+# Copyright Nokia Corporation 2009
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+style "fremantle-shadow-label" = "osso-color-themeing"
+{
+	engine "sapwood"
+	{
+		shadowcolor = @ReversedTextColor
+	}
+}
+widget "*.hildon-shadow-label" style "fremantle-shadow-label"
+class "GtkAccelLabel" style "fremantle-shadow-label"
+
+style "fremantle-shadow-label-reversed" = "osso-color-themeing"
+{
+	fg[NORMAL] = @ReversedTextColor
+	fg[INSENSITIVE] = @ReversedDisabledTextColor
+
+	engine "sapwood"
+	{
+		shadowcolor = @DefaultTextColor
+	}
+}
+widget "*.hildon-shadow-label-reversed" style "fremantle-shadow-label-reversed"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-menu" {
+
+   GtkMenu::horizontal_padding = 0
+   GtkMenu::vertical_padding = 0
+   GtkMenu::horizontal_offset = -8
+
+   GtkMenu::double_arrows = 1
+
+   xthickness = 0
+   ythickness = 0
+   GtkWidget::scroll-arrow-vlength = 26
+   GtkMenu::maemo-arrow-scaling = 1.0
+   
+   engine "sapwood" {
+      image {
+	 function = BOX
+	 state = NORMAL
+	 detail = "menu"
+     shaped = TRUE
+      }
+    # Don't paint anything (extra) as the scroll arrow background
+    image
+      {
+	function = BOX
+	detail   = "menu_scroll_arrow_up"
+      }
+    image {
+	function = BOX
+	detail   = "menu_scroll_arrow_down"
+      }
+    image
+      {
+        function        = ARROW
+	state           = ACTIVE
+	arrow_direction = UP
+	overlay_file    = "../images/qgn_plat_menu_scroll_up_arrow_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	state           = INSENSITIVE
+	arrow_direction = UP
+	overlay_file    = "../images/qgn_plat_menu_scroll_up_arrow_disabled.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	arrow_direction = UP
+	overlay_file    = "../images/qgn_plat_menu_scroll_up_arrow_normal.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	state           = ACTIVE
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_menu_scroll_down_arrow_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	state           = INSENSITIVE
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_menu_scroll_down_arrow_disabled.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_menu_scroll_down_arrow_normal.png"
+	overlay_stretch = FALSE
+      }
+   }
+}
+
+style "osso-menu-with-corners" {
+
+   engine "sapwood" {
+      image {
+	  function = BOX
+	  state = NORMAL
+	  detail = "menu"
+	  file = "../images/qgn_plat_application_menu_1st_level_frame.png"
+	  border = { 20, 20, 20, 20 }
+      shaped = TRUE
+      }
+   }
+}
+
+style "osso-menu-without-corners" {
+
+   engine "sapwood" {
+      image {
+	 function = BOX
+	 state = NORMAL
+	 detail = "menu"
+     shaped = TRUE
+      }
+   }
+}
+
+class "GtkMenu" style "osso-menu"
+widget "*.menu_with_corners" style "osso-menu-with-corners"
+widget "*.menu_without_corners" style "osso-menu-without-corners"
+widget "*.menu_force_with_corners" style "osso-menu-with-corners"
+widget "*.menu_force_without_corners" style "osso-menu-without-corners"
+widget "*.menu_without_corners_first_level" style "osso-menu-without-corners"
+widget "*.menu_combobox" style "osso-menu-without-corners"
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-menuitem"
+{
+  GtkMenuItem::wide-separators = 1
+  GtkMenuItem::separator_height = 3
+  GtkMenuItem::arrow-scaling = 1.4
+
+  engine "sapwood"
+  {
+    # Image for passive focus.
+    image
+      {
+	function = BOX
+	state = SELECTED
+	file = "../images/RoundedSelectionDimmed.png"
+        border = { 6, 6, 6, 6 }
+      }
+    
+    # Image for active focus.
+    image
+      {
+	function = BOX
+	state = PRELIGHT
+        file = "../images/RoundedSelection.png"
+        border = { 6, 6, 6, 6 }
+      }
+    
+    image
+      {
+        function        = ARROW
+        arrow_direction = RIGHT
+        state           = INSENSITIVE
+        overlay_file    = "../images/qgn_plat_menu_next_level_arrow_disabled.png"
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	arrow_direction = RIGHT
+	shadow          = OUT
+	state           = PRELIGHT
+	overlay_file    = "../images/qgn_plat_menu_next_level_arrow_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+	arrow_direction = RIGHT
+	shadow          = OUT
+	overlay_file    = "../images/qgn_plat_menu_next_level_arrow_normal.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+        arrow_direction = RIGHT
+        shadow          = IN
+        overlay_file    = "../images/qgn_plat_menu_next_level_arrow_focused.png"
+        overlay_stretch = FALSE
+      }
+     image
+      {
+        function        = BOX
+	detail          = "hseparator"
+        file            = "../images/qgn_plat_separator_horizontal.png"
+        border          = { 6, 6, 0, 0 }
+      }
+  }		  
+}
+class "GtkMenuItem" style "osso-menuitem"
+
+style "fremantle-menuitem"
+{
+        ythickness = 20
+        xthickness = 8
+}
+widget "*.hildon-context-sensitive-menu.GtkMenuItem" style "fremantle-menuitem"
+widget "*.hildon-context-sensitive-menu.GtkCheckMenuItem" style "fremantle-menuitem"
+widget "*.hildon-context-sensitive-menu.GtkRadioMenuItem" style "fremantle-menuitem"
+widget "*.hildon-context-sensitive-menu.GtkImageMenuItem" style "fremantle-menuitem"
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+# Tabbed windows
+style "osso-notebook"
+{
+  GtkNotebook::inner_left_border = 0
+  GtkNotebook::inner_right_border = 0
+  GtkNotebook::tab-overlap = 0
+  GtkNotebook::arrow-spacing = 6
+  GtkNotebook::label-padding = 12
+  GtkWidget::scroll-arrow-hlength = 20
+  GtkWidget::scroll-arrow-vlength = 30
+
+  # Themings for images on different sides of the notebook.
+  engine "sapwood"
+  {
+    # Top theming.
+    image 
+      {
+        function = EXTENSION
+	state    = ACTIVE
+	file     = "../images/qgn_plat_notebook_tab_passive.png"
+	border   = { 8, 8, 33, 1 }
+	gap_side = BOTTOM
+      }
+    image
+      {
+        function = EXTENSION
+	file     = "../images/qgn_plat_notebook_tab_active.png"
+	border   = { 8, 8, 33, 1 }
+	gap_side = BOTTOM
+      }
+    # Content area theming when arrows are not present.
+    image
+      {
+        function = BOX_GAP
+	detail   = "notebook"
+        file     = "../images/qgn_plat_notebook_tab_area_border.png"
+        border   = { 10, 10, 0, 20 }
+      }
+    # Content area theming when arrows are present.
+    image
+      {
+        function = BOX_GAP
+	detail   = "notebook_show_arrow"
+        file     = "../images/qgn_plat_notebook_tab_area_border_arrow_space.png"
+        border   = { 38, 38, 10, 10 }
+      }
+      
+    # Arrows left
+    image
+      {
+        function        = ARROW
+        state           = INSENSITIVE
+	arrow_direction = LEFT
+	overlay_file    = "../images/qgn_plat_notebook_button_previous_disabled.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+        shadow          = IN
+	arrow_direction = LEFT
+	overlay_file    = "../images/qgn_plat_notebook_button_previous_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+        shadow          = OUT
+	arrow_direction = LEFT
+	overlay_file    = "../images/qgn_plat_notebook_button_previous.png"
+	overlay_stretch = FALSE
+      }
+    
+    # Arrows right
+    image
+      {
+        function        = ARROW
+        state           = INSENSITIVE
+	arrow_direction = RIGHT
+	overlay_file    = "../images/qgn_plat_notebook_button_next_disabled.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+        shadow          = IN
+	arrow_direction = RIGHT
+	overlay_file    = "../images/qgn_plat_notebook_button_next_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = ARROW
+        shadow          = OUT
+	arrow_direction = RIGHT
+	overlay_file    = "../images/qgn_plat_notebook_button_next.png"
+	overlay_stretch = FALSE
+      }
+  }
+}
+class "GtkNotebook" style "osso-notebook"
+
+widget_class "*.GtkNotebook.GtkLabel" style "osso-ButtonFont"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-paned"  = "osso-logical-colors" {
+
+    bg[NORMAL] = @SelectionColor
+    bg[PRELIGHT] = @SelectionColor
+    GtkPaned::handle_size = 10
+
+    engine "sapwood"
+    {
+        image
+        {
+            function    = HANDLE
+            file        = "../images/qgn_plat_separator_vertical_paned.png"
+            overlay_file= "../images/qgn_plat_separator_vertical_paned_thumb.png"
+            orientation = VERTICAL
+            border      = {0,0,12,12}
+            overlay_stretch = FALSE
+        }
+        image
+        {
+            function    = HANDLE
+            file        = "../images/qgn_plat_separator_horizontal_paned.png"
+            overlay_file= "../images/qgn_plat_separator_horizontal_paned_thumb.png"
+            orientation = HORIZONTAL
+            border      = {12,12,0,0}
+            overlay_stretch = FALSE
+        }
+    }
+}
+
+class "GtkPaned" style "osso-paned"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-progressbar" = "osso-logical-colors"
+{
+    xthickness = 3
+    ythickness = 3
+    
+    GtkProgressBar::min-horizontal-bar-height = 70
+    GtkProgressBar::min-vertical-bar-width = 70
+
+    GtkProgressBar::xspacing = 0
+    GtkProgressBar::yspacing = 0
+
+    fg[NORMAL] = @DefaultTextColor
+    fg[PRELIGHT] = @PaintedTextColor
+
+    engine "sapwood"
+    {
+        image
+        {
+            function = BOX
+            detail = "bar"
+            file = "../images/Progressbar.png"
+            border = { 2, 2, 31, 31 }
+        }
+        image 
+        {	
+            function = BOX
+            detail = "trough"
+            file = "../images/ProgressbarBackground.png"
+            border = { 24, 24, 34, 34 }
+        }
+    }
+}
+class "GtkProgressBar" style "osso-progressbar"
+
+style "fremantle-small-progressbar" = "osso-logical-colors"
+{
+    xthickness = 2
+    ythickness = 2
+    
+    GtkProgressBar::min-horizontal-bar-height = 16
+    GtkProgressBar::min-vertical-bar-width = 16
+
+    GtkProgressBar::xspacing = 0
+    GtkProgressBar::yspacing = 0
+
+    fg[NORMAL] = @DefaultTextColor
+    fg[PRELIGHT] = @PaintedTextColor
+
+    engine "sapwood"
+    {
+        image
+        {
+            function = BOX
+            detail = "bar"
+            file = "../images/ProgressbarSmall.png"
+            border = { 2, 2, 2, 2 }
+        }
+        image 
+        {	
+            function = BOX
+            detail = "trough"
+            file = "../images/ProgressbarSmallBackground.png"
+            border = { 2, 2, 2, 2 }
+        }
+    }
+}
+widget "*.small-progress-bar" style "fremantle-small-progressbar"# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+	
+style "osso-radiobutton"
+{
+	GtkCheckButton::indicator-size = 26
+	GtkCheckButton::indicator-spacing = 2
+	GtkWidget::interior-focus = 0
+
+	ythickness = 0
+
+	engine "sapwood"
+	{
+		image
+		{
+			function        = OPTION
+			shadow          = OUT
+			state           = INSENSITIVE
+			file    = "../images/qgn_plat_button_radio_empty_disabled.png"
+		}
+		image 
+		{
+			function        = OPTION
+			shadow          = IN
+			state           = INSENSITIVE
+			file    = "../images/qgn_plat_button_radio_selected_disabled.png"
+		}
+		image
+		{
+			function        = OPTION
+			shadow          = OUT
+			file    = "../images/qgn_plat_button_radio_empty_normal.png"
+		}
+		image
+		{
+			function        = OPTION
+			shadow          = IN
+			file    = "../images/qgn_plat_button_radio_selected_normal.png"
+		}
+		image
+		{
+			function = FOCUS
+		}
+	}
+}
+class "GtkRadioButton" style "osso-radiobutton"
+
+widget_class "*.GtkRadioButton.GtkLabel" style "osso-SystemFont"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-range"
+{
+# Not sure what these two change, so I'm leaving them out.
+#  GtkRange::slider_width = 16
+#  GtkRange::stepper_size = 16
+
+  # Alignment in entry box. 0 = left, 1 = right
+  GtkRange::hildon_range_editor_entry_alignment = 1
+  # Amount of padding to add to each side of the separator
+  GtkRange::hildon_range_editor_separator_padding = 6
+
+  # Use all available space for painting the scroll arrows
+  GtkRange::arrow-paint-box-layout = 1
+  GtkRange::arrow-scaling = 1.0
+  
+  engine "sapwood"
+  {
+    # Vertical
+    image
+      {
+        function        = BOX
+	orientation     = VERTICAL
+	state		= INSENSITIVE
+	file            = "../images/qgn_plat_scroll_vertical_shaft_disabled.png"
+      }
+    image
+      {
+        function        = SLIDER
+	orientation     = VERTICAL
+	state		= INSENSITIVE
+	file            = "../images/qgn_plat_scroll_vertical_thumb_disabled.png"
+	border		= { 0, 0, 10, 10 }
+      }
+    image
+      {
+        function        = BOX
+	orientation     = VERTICAL
+	file            = "../images/qgn_plat_scroll_vertical_shaft_normal.png"
+      }
+    image
+      {
+        function        = SLIDER
+	orientation     = VERTICAL
+        state           = ACTIVE
+	file            = "../images/qgn_plat_scroll_vertical_thumb_pressed.png"
+	border		= { 0, 0, 10, 10 }
+      }
+    image
+      {
+        function        = SLIDER
+	orientation     = VERTICAL
+	file            = "../images/qgn_plat_scroll_vertical_thumb_normal.png"
+	border		= { 0, 0, 10, 10 }
+      }
+    
+    # Horizontal
+    image
+      {
+        function        = BOX
+	orientation     = HORIZONTAL
+	state		= INSENSITIVE
+	file            = "../images/qgn_plat_scroll_horizontal_shaft_disabled.png"
+      }
+    image 
+      {
+        function        = SLIDER
+	orientation     = HORIZONTAL
+	state		= INSENSITIVE
+	file            = "../images/qgn_plat_scroll_horizontal_thumb_disabled.png"
+	border		= { 10, 10, 0, 0 }
+      }
+    image
+      {
+        function        = BOX
+	orientation     = HORIZONTAL
+	file            = "../images/qgn_plat_scroll_horizontal_shaft_normal.png"
+      }
+    image 
+      {
+        function        = SLIDER
+	orientation     = HORIZONTAL
+        state           = ACTIVE
+	file            = "../images/qgn_plat_scroll_horizontal_thumb_pressed.png"
+	border		= { 10, 10, 0, 0 }
+      }
+    image 
+      {
+        function        = SLIDER
+	orientation     = HORIZONTAL
+	file            = "../images/qgn_plat_scroll_horizontal_thumb_normal.png"
+	border		= { 10, 10, 0, 0 }
+      }
+  }
+}
+
+# superclass of scale and and scrollbar
+class "GtkRange" style "osso-range"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "fremantle-scale-horizontal"
+{
+	GtkScale::slider-length = 40
+	GtkScale::slider-width = 60
+	GtkRange::trough-side-details = 1
+
+	engine "sapwood"
+	{
+		
+		image
+		{
+			function = BOX
+			detail = "stepper"
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-lower"
+			state = INSENSITIVE
+			file = "../images/SliderLeftsideDisabled.png"
+			border = {6, 0, 0, 0}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-lower"
+			file = "../images/SliderLeftside.png"
+			border = {6, 0, 0, 0}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-upper"
+			state = INSENSITIVE
+			file = "../images/SliderRightsideDisabled.png"
+			border = {0, 6, 0, 0}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-upper"
+			file = "../images/SliderRightside.png"
+			border = {0, 6, 0, 0}
+		}
+		image
+		{
+			function = SLIDER
+			orientation = HORIZONTAL
+			state = INSENSITIVE
+			file = "../images/SliderThumbDisabled.png"
+		}
+		image
+		{
+			function = SLIDER
+			orientation = HORIZONTAL
+			file = "../images/SliderThumb.png"
+		}
+	}
+}
+class "GtkHScale" style "fremantle-scale-horizontal"
+
+style "fremantle-scale-vertical"
+{
+	GtkScale::slider-length = 40
+	GtkScale::slider-width = 60
+	GtkRange::trough-side-details = 1
+
+	engine "sapwood"
+	{
+		image
+		{
+			function = BOX
+			detail = "stepper"
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-upper"
+			state = INSENSITIVE
+			file = "../images/VSliderBottomDisabled.png"
+			border = {0, 0, 0, 6}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-upper"
+			file = "../images/VSliderBottom.png"
+			border = {0, 0, 0, 6}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-lower"
+			state = INSENSITIVE
+			file = "../images/VSliderTopDisabled.png"
+			border = {0, 0, 6, 0}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-lower"
+			file = "../images/VSliderTop.png"
+			border = {0, 0, 6, 0}
+		}
+		image
+		{
+			function = SLIDER
+			orientation = VERTICAL
+			state = INSENSITIVE
+			file = "../images/VSliderThumbDisabled.png"
+		}
+		image
+		{
+			function = SLIDER
+			orientation = VERTICAL
+			file = "../images/VSliderThumb.png"
+		}
+	}
+}
+class "GtkVScale" style "fremantle-scale-vertical"
+
+# Bi-directional scales (negative/positive)
+style "fremantle-biscale-horizontal"
+{
+	GtkScale::slider-length = 40
+	GtkScale::slider-width = 60
+	GtkRange::trough-side-details = 0
+
+	engine "sapwood"
+	{
+		
+		image
+		{
+			function = BOX
+			detail = "stepper"
+		}
+		image
+		{
+			function = BOX
+			detail = "trough"
+			state = INSENSITIVE
+			file = "../images/BiDirectionalSliderBackgroundDisabled.png"
+			border = {6, 6, 0, 0}
+			overlay_file = "../images/BiDirectionalSliderCenterPointDisabled.png"
+			overlay_border = {0, 0, 1, 0}
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function = BOX
+			detail = "trough"
+			file = "../images/BiDirectionalSliderBackground.png"
+			border = {6, 6, 0, 0}
+			overlay_file = "../images/BiDirectionalSliderCenterPoint.png"
+			overlay_border = {0, 0, 1, 0}
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function = SLIDER
+			orientation = HORIZONTAL
+			state = INSENSITIVE
+			file = "../images/BiDirectionalSliderThumbDisabled.png"
+		}
+		image
+		{
+			function = SLIDER
+			orientation = HORIZONTAL
+			file = "../images/BiDirectionalSliderThumb.png"
+		}
+	}
+}
+widget "*.bidirectional-slider-horizontal" style "fremantle-biscale-horizontal"
+
+style "fremantle-biscale-vertical"
+{
+	GtkScale::slider-length = 40
+	GtkScale::slider-width = 60
+	GtkRange::trough-side-details = 0
+
+	engine "sapwood"
+	{
+		image
+		{
+			function = BOX
+			detail = "stepper"
+		}
+		image
+		{
+			function = BOX
+			detail = "trough"
+			state = INSENSITIVE
+			file = "../images/BiDirectionalVSliderBackgroundDisabled.png"
+			border = {0, 0, 6, 6}
+			overlay_file = "../images/BiDirectionalVSliderCenterPointDisabled.png"
+			overlay_border = {1, 0, 0, 0}
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function = BOX
+			detail = "trough"
+			file = "../images/BiDirectionalVSliderBackground.png"
+			border = {0, 0, 6, 6}
+			overlay_file = "../images/BiDirectionalVSliderCenterPoint.png"
+			overlay_border = {1, 0, 0, 0}
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function = SLIDER
+			orientation = VERTICAL
+			state = INSENSITIVE
+			file = "../images/BiDirectionalVSliderThumbDisabled.png"
+		}
+		image
+		{
+			function = SLIDER
+			orientation = VERTICAL
+			file = "../images/BiDirectionalVSliderThumb.png"
+		}
+	}
+}
+widget "*.bidirectional-slider-vertical" style "fremantle-biscale-vertical"
+
+# Lock Slider
+
+style "fremantle-lock-slider"
+{
+	GtkScale::slider-length = 148
+	GtkScale::slider-width = 94
+	GtkRange::trough-side-details = 1
+
+	engine "pixmap"
+	{
+		image
+		{
+			function = BOX
+			detail = "stepper"
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-lower"
+			file = "../images/LockSliderLeft.png"
+			border = {70, 0, 0, 0}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-upper"
+			file = "../images/LockSliderRight.png"
+			border = {0, 70, 0, 0}
+		}
+		image
+		{
+			function = SLIDER
+			orientation = HORIZONTAL
+			file = "../images/LockSliderThumb.png"
+		}
+	}
+}
+widget "*.sui-tklock-slider" style "fremantle-lock-slider"
+
+style "fremantle-lock-slider-portrait"
+{
+        GtkScale::slider-length = 148
+        GtkScale::slider-width = 94
+        GtkRange::trough-side-details = 1
+
+        engine "pixmap"
+        {
+                image
+                {
+                        function = BOX
+                        detail = "stepper"
+                }
+                image
+                {
+                        function = BOX
+                        detail = "trough-lower"
+                        file = "../images/LockSliderTop.png"
+                        border = {0, 0, 70, 0}
+                }
+                image
+                {
+                        function = BOX
+                        detail = "trough-upper"
+                        file = "../images/LockSliderBottom.png"
+                        border = {0, 0, 0, 70}
+                }
+                image
+                {
+                        function = SLIDER
+                        orientation = VERTICAL
+                        file = "../images/LockSliderThumbPortrait.png"
+                }
+        }
+}
+widget "*.sui-tklock-slider-portrait" style "fremantle-lock-slider-portrait"
+
+
+
+# deprectated stuff, we just make it look like normal scales
+style "osso-volumebar-horizontal"
+{
+  HildonVolumebarRange::stepper_size = 26
+  HildonVolumebarRange::stepper_spacing = 0
+  HildonVolumebarRange::slider_width = 60
+  HildonVolumebarRange::slider_length = 40
+  HildonVolumebarRange::focus_line_width = 0
+  HildonVolumebarRange::focus_padding = 0
+  HildonVolumebarRange::stepper_spacing = 6
+  HildonVolumebarRange::arrow_displacement_x = 0
+  HildonVolumebarRange::arrow_displacement_y = 0
+  HildonVolumebarRange::trough_border = 0
+  HildonVolumebarRange::value_spacing = 0
+  HildonVolumebarRange::autodimmed_steppers = 1
+  HildonVolumebarRange::trough-side-details = 1
+  HildonVolumebarRange::draw_trough_under_steppers = 0
+  
+	engine "sapwood"
+	{
+		image
+		{
+			function = BOX
+			detail = "background"
+			state = NORMAL
+		}
+		image
+		{
+			function = BOX
+			detail = "stepper"
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-lower"
+			state = INSENSITIVE
+			file = "../images/SliderLeftsideDisabled.png"
+			border = {6, 0, 0, 0}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-lower"
+			file = "../images/SliderLeftside.png"
+			border = {6, 0, 0, 0}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-upper"
+			state = INSENSITIVE
+			file = "../images/SliderRightsideDisabled.png"
+			border = {0, 6, 0, 0}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-upper"
+			file = "../images/SliderRightside.png"
+			border = {0, 6, 0, 0}
+		}
+		image
+		{
+			function = SLIDER
+			orientation = HORIZONTAL
+			state = INSENSITIVE
+			file = "../images/SliderThumbDisabled.png"
+		}
+		image
+		{
+			function = SLIDER
+			orientation = HORIZONTAL
+			file = "../images/SliderThumb.png"
+		}
+	}
+}
+class "HildonHVolumebar" style "osso-volumebar-horizontal" 
+widget_class "*.HildonHVolumebar.HildonVolumebarRange" style "osso-volumebar-horizontal"
+
+style "osso-volumebar-vertical"
+{
+  HildonVolumebarRange::stepper_size = 26
+  HildonVolumebarRange::stepper_spacing = 0
+  HildonVolumebarRange::slider_width = 60
+  HildonVolumebarRange::slider_length = 40
+  HildonVolumebarRange::focus_line_width = 0
+  HildonVolumebarRange::focus_padding = 0
+  HildonVolumebarRange::stepper_spacing = 6
+  HildonVolumebarRange::arrow_displacement_x = 0
+  HildonVolumebarRange::arrow_displacement_y = 0
+  HildonVolumebarRange::trough_border = 0
+  HildonVolumebarRange::value_spacing = 0
+  HildonVolumebarRange::autodimmed_steppers = 1
+  HildonVolumebarRange::trough-side-details = 1
+  HildonVolumebarRange::draw_trough_under_steppers = 0
+  
+	engine "sapwood"
+	{
+		image
+		{
+			function = BOX
+			detail = "background"
+			state = NORMAL
+		}
+		image
+		{
+			function = BOX
+			detail = "stepper"
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-lower"
+			state = INSENSITIVE
+			file = "../images/VSliderBottomDisabled.png"
+			border = {0, 0, 0, 6}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-lower"
+			file = "../images/VSliderBottom.png"
+			border = {0, 0, 0, 6}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-upper"
+			state = INSENSITIVE
+			file = "../images/VSliderTopDisabled.png"
+			border = {0, 0, 6, 0}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-upper"
+			file = "../images/VSliderTop.png"
+			border = {0, 0, 6, 0}
+		}
+		image
+		{
+			function = SLIDER
+			orientation = VERTICAL
+			state = INSENSITIVE
+			file = "../images/VSliderThumbDisabled.png"
+		}
+		image
+		{
+			function = SLIDER
+			orientation = VERTICAL
+			file = "../images/VSliderThumb.png"
+		}
+	}
+}
+class "HildonVVolumebar" style "osso-volumebar-vertical"
+widget_class "*.HildonVVolumebar.HildonVolumebarRange" style "osso-volumebar-vertical"
+
+style "osso-volumebar-mutebutton"
+{
+
+  GtkWidget::focus_line_pattern = "\0\0\0\0\0\0\0\0"
+  
+  engine "sapwood"
+  {
+    image
+    {
+      function = BOX
+      shadow = OUT
+      state = INSENSITIVE
+      file = "../images/VolumeButtonNormalDisabled.png"
+    }
+    image
+    {
+      function = BOX
+      shadow = OUT
+      file = "../images/VolumeButtonNormal.png"
+    }
+    image
+    {
+      function = BOX
+      shadow = IN
+      state = INSENSITIVE
+      file = "../images/VolumeButtonMutedDisabled.png"
+    }
+    image
+    {
+      function = BOX
+      shadow = IN
+      file = "../images/VolumeButtonMuted.png"
+    }
+   image
+    {
+      function = FOCUS
+    }
+  }
+}
+widget_class "*.HildonHVolumebar.GtkToggleButton" style "osso-volumebar-mutebutton"
+widget_class "*.HildonVVolumebar.GtkToggleButton" style "osso-volumebar-mutebutton"
+
+
+style "osso-seekbar"
+{
+	HildonSeekbar::stepper_size = 26
+	HildonSeekbar::stepper_spacing = 6
+	HildonSeekbar::trough_border = 0
+	HildonSeekbar::slider_width = 60
+	HildonSeekbar::slider_length = 40
+        HildonSeekbar::focus-line-width = 0
+        HildonSeekbar::focus-padding = 0
+        HildonSeekbar::autodimmed_steppers = 1
+	HildonSeekbar::draw_trough_under_steppers = 0
+        HildonSeekbar::two_part_trough = 1
+        HildonSeekbar::trough-side-details = 1
+        GtkRange::stream_indicator_padding = 3
+	
+	engine "sapwood" {
+		#
+		# At first, lets override some gtkrange specific things
+		#
+      		image {
+	 		function = BOX
+			detail = "stepper"
+      		}
+      		image {
+	 		function = BOX
+			detail = "trough-fill-level-full"
+      		}
+      		image {
+	 		function = BOX
+			detail = "trough-fill-level"
+      		}
+      		
+		image
+		{
+			function = BOX
+			detail = "trough-lower"
+			state = INSENSITIVE
+			file = "../images/SliderLeftsideDisabled.png"
+			border = {6, 0, 0, 0}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-lower"
+			file = "../images/SliderLeftside.png"
+			border = {6, 0, 0, 0}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-upper"
+			state = INSENSITIVE
+			file = "../images/SliderRightsideDisabled.png"
+			border = {0, 6, 0, 0}
+		}
+		image
+		{
+			function = BOX
+			detail = "trough-upper"
+			file = "../images/SliderRightside.png"
+			border = {0, 6, 0, 0}
+		}
+		image
+		{
+			function = SLIDER
+			orientation = HORIZONTAL
+			state = INSENSITIVE
+			file = "../images/SliderThumbDisabled.png"
+		}
+		image
+		{
+			function = SLIDER
+			orientation = HORIZONTAL
+			file = "../images/SliderThumb.png"
+		}
+
+                
+	}
+}
+class "HildonSeekbar" style "osso-seekbar"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+style "osso-scrollbar"
+{
+	GtkRange::stepper_size = 26
+	GtkRange::stepper_spacing = 0
+	GtkRange::trough_border = 0
+	GtkRange::slider_width = 22
+	GtkRange::draw_trough_under_steppers = 0
+	GtkRange::draw_trough = 0
+	GtkRange::arrow_displacement_x = 0
+	GtkRange::arrow_displacement_y = 0
+	GtkRange::autodimmed_steppers = 1
+	GtkScrollbar::min-slider-length = 32
+	GtkRange::activate-slider = 1
+
+	engine "sapwood"
+	{
+		# left
+		image 
+		{
+			function        = STEPPER
+			state           = ACTIVE
+			arrow_direction = LEFT
+			overlay_file    = "../images/qgn_plat_scroll_horizontal_left_arrow_pressed.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = STEPPER
+			state           = SELECTED
+			arrow_direction = LEFT
+			overlay_file    = "../images/qgn_plat_scroll_horizontal_left_arrow_pressed.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = STEPPER
+			state           = INSENSITIVE
+			arrow_direction = LEFT
+			overlay_file    = "../images/qgn_plat_scroll_horizontal_left_arrow_disabled.png"
+			overlay_stretch = FALSE
+		}
+		image    
+		{
+			function        = STEPPER
+			arrow_direction = LEFT
+			overlay_file    = "../images/qgn_plat_scroll_horizontal_left_arrow_normal.png"
+			overlay_stretch = FALSE
+		}
+
+		# right
+		image
+		{
+			function        = STEPPER
+			state           = ACTIVE
+			arrow_direction = RIGHT
+			overlay_file    = "../images/qgn_plat_scroll_horizontal_right_arrow_pressed.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = STEPPER
+			state           = SELECTED
+			arrow_direction = RIGHT
+			overlay_file    = "../images/qgn_plat_scroll_horizontal_right_arrow_pressed.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = STEPPER
+			state           = INSENSITIVE
+			arrow_direction = RIGHT
+			overlay_file    = "../images/qgn_plat_scroll_horizontal_right_arrow_disabled.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = STEPPER
+			arrow_direction = RIGHT
+			overlay_file    = "../images/qgn_plat_scroll_horizontal_right_arrow_normal.png"
+			overlay_stretch = FALSE
+		}
+
+		# up
+		image
+		{
+			function        = STEPPER
+			state           = ACTIVE
+			arrow_direction = UP
+			overlay_file    = "../images/qgn_plat_scroll_vertical_up_arrow_pressed.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = STEPPER
+			state           = SELECTED
+			arrow_direction = UP
+			overlay_file    = "../images/qgn_plat_scroll_vertical_up_arrow_pressed.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = STEPPER
+			state           = INSENSITIVE
+			arrow_direction = UP
+			overlay_file    = "../images/qgn_plat_scroll_vertical_up_arrow_disabled.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = STEPPER
+			arrow_direction = UP
+			overlay_file    = "../images/qgn_plat_scroll_vertical_up_arrow_normal.png"
+			overlay_stretch = FALSE
+		}
+
+		# down
+		image
+		{
+			function        = STEPPER
+			state           = ACTIVE
+			arrow_direction = DOWN
+			overlay_file    = "../images/qgn_plat_scroll_vertical_down_arrow_pressed.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = STEPPER
+			state           = SELECTED
+			arrow_direction = DOWN
+			overlay_file    = "../images/qgn_plat_scroll_vertical_down_arrow_pressed.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = STEPPER
+			state           = INSENSITIVE
+			arrow_direction = DOWN
+			overlay_file    = "../images/qgn_plat_scroll_vertical_down_arrow_disabled.png"
+			overlay_stretch = FALSE
+		}
+		image
+		{
+			function        = STEPPER
+			arrow_direction = DOWN
+			overlay_file    = "../images/qgn_plat_scroll_vertical_down_arrow_normal.png"
+			overlay_stretch = FALSE
+		}
+	}
+}
+
+
+
+class "GtkScrollbar" style "osso-scrollbar"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+style "osso-scrolledwindow"
+{
+  GtkScrolledWindow::scrollbar-spacing = 6
+
+  engine "sapwood"
+    {
+      image
+        {
+	  function = SHADOW
+	  file     = "../images/wmFrame.png"
+	  border   = { 3, 3, 3, 3 }
+	}
+    }
+}
+class "GtkScrolledWindow" style "osso-scrolledwindow"
+
+style "osso-special-scrolledwindow"
+{
+  GtkScrolledWindow::scrollbar-dislocation = 1
+
+  engine "sapwood"
+    {
+      image
+        {
+	  function = SHADOW
+	  file     = "../images/wmFrame.png"
+	  border   = { 3, 3, 3, 3 }
+	}
+    }
+}
+
+widget_class "*.GtkScrolledWindow" style "osso-special-scrolledwindow"
+widget_class "GtkDialog.GtkVBox.GtkScrolledWindow" style "osso-special-scrolledwindow"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+style "osso-separator"
+{
+	GtkVSeparator::wide-separators = 1
+	GtkHSeparator::wide-separators = 1
+	GtkVSeparator::separator-width = 3
+	GtkHSeparator::separator-height = 3
+ 
+	engine "sapwood" {
+		image {
+			function = BOX
+			detail   = "hseparator"
+			file     = "../images/qgn_plat_separator_horizontal.png"
+			border   = { 6, 6, 0, 0 }
+		}
+		image {
+			function = BOX
+			detail   = "vseparator"
+			file     = "../images/qgn_plat_separator_vertical.png"
+			border   = { 0, 0, 6, 6 }
+		}
+	}
+}
+class "GtkSeparator" style "osso-separator"
+
+style "edit-toolbar-separator"
+{
+	GtkVSeparator::wide-separators = 1
+	GtkHSeparator::wide-separators = 1
+	GtkVSeparator::separator-width = 2
+	GtkHSeparator::separator-height = 2
+ 
+	engine "sapwood" {
+		image {
+			function = BOX
+			detail   = "vseparator"
+			file     = "../images/wmSeparator.png"
+		}
+	}
+}
+widget_class "*.HildonEditToolbar.GtkVSeparator" style "edit-toolbar-separator"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+#
+# GTK-SETTINGS
+#
+
+# Default backend to use
+gtk-file-chooser-backend = "gnome-vfs"
+
+# Are we using toolbar animation
+gtk-enable-animations = 0
+gtk-toolbar-style = GTK_TOOLBAR_ICONS
+
+# Keyboard navigation
+hildon-keyboard-navigation = 1
+
+# Menu interaction
+gtk-menu-shell-timeout = -1
+
+# Drag and drop treshold
+gtk-dnd-drag-threshold = 30
+
+# Touchscreen mode (GtkMenu scrolling, prelighting)
+gtk-touchscreen-mode = 1
+
+# Show last char in hidden entries for 600 ms
+gtk-entry-last-char-timeout = 600
+
+# Disable wrap-around in menus, notebooks and radio groups
+gtk-keynav-wrap-around = 0
+
+# Enable cursor only navigation
+gtk-keynav-cursor-only = 1
+
+# Enable the delayed asterix in password fields
+gtk-entry-password-hint-timeout = 600
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-textview" = "osso-color-themeing"
+{
+	GtkWidget::interior-focus = 0
+	GtkWidget::focus_line_width = 5
+
+	text[NORMAL] = @ReversedTextColor
+	text[INSENSITIVE] = @ReversedDisabledTextColor
+	base[NORMAL] = @ReversedBackgroundColor
+}
+class "GtkTextView" style "osso-textview"
+
+style "fremantle-textview" = "osso-color-themeing"
+{
+	GtkWidget::focus-line-width = 18
+	GtkWidget::interior-focus = 0
+	GtkWidget::hildon-mode = 1
+
+	text[NORMAL] = @ReversedTextColor
+	text[INSENSITIVE] = @ReversedDisabledTextColor
+	base[NORMAL] = @ReversedBackgroundColor
+
+	engine "sapwood"
+	{
+		image
+		{
+			function = FOCUS
+			detail   = "textview"
+			file     = "../images/TextInputFrameFocused.png"
+			border = { 18, 18, 18, 18 }
+		}
+		image
+		{
+			function = SHADOW
+			shadow   = OUT
+			state    = INSENSITIVE
+			detail   = "textview"
+			file     = "../images/TextInputFrameDisabled.png"
+			border = { 18, 18, 18, 18 }
+		}
+		image
+		{
+			function = SHADOW
+			shadow   = OUT
+			detail   = "textview"
+			file     = "../images/TextInputFrame.png"
+			border = { 18, 18, 18, 18 }
+		}
+	}
+}
+class "HildonTextView" style "fremantle-textview"
+
+# This is for SMS view and similar views that should have a dark background with horizontal text lines.
+style "fremantle-fullscreen-textview" = "osso-color-themeing"
+{
+	GtkWidget::focus-line-width = 0
+	GtkWidget::interior-focus = 0
+	GtkWidget::hildon-mode = 1
+	GtkTextView::custom-background = 1
+
+	# We change the logical colour because otherwise HildonTextview would overwrite our setting.
+	color["ReversedTextColor"] = @DefaultTextColor
+	color["ReversedDisabledTextColor"] = @DisabledTextColor
+	base[NORMAL] = @DefaultBackgroundColor
+
+	engine "sapwood" {
+		image {
+			function = FLAT_BOX
+			file = "TextInputBaseline.png"
+		}
+	}
+}
+widget "*.hildon-fullscreen-textview" style "fremantle-fullscreen-textview"
+
+# A textview that appears like a non-editable label. Should not be used for editable textviews.
+style "fremantle-readonly-textview" = "osso-color-themeing"
+{
+	GtkWidget::focus-line-width = 0
+	GtkWidget::interior-focus = 0
+	GtkWidget::hildon-mode = 1
+
+	# We change the logical colour because otherwise HildonTextview would overwrite our setting.
+	color["ReversedTextColor"] = @DefaultTextColor
+	color["ReversedDisabledTextColor"] = @DisabledTextColor
+	base[NORMAL] = @DefaultBackgroundColor
+}
+widget "*.hildon-readonly-textview" style "fremantle-readonly-textview"
+
+# A textview with a border and dark background, used mainly by call UI.
+style "fremantle-reversed-textview" = "osso-color-themeing"
+{
+	GtkWidget::focus-line-width = 12
+	GtkWidget::interior-focus = 0
+	GtkWidget::hildon-mode = 1
+
+	# We change the logical colour because otherwise HildonTextview would overwrite our setting.
+	color["ReversedTextColor"] = @DefaultTextColor
+	color["ReversedDisabledTextColor"] = @DisabledTextColor
+	base[NORMAL] = @DarkerBackgroundColor
+
+	engine "sapwood"
+	{
+		image
+		{
+			function = FOCUS
+			detail   = "textview"
+			file     = "../images/CallEntry.png"
+			border = { 16, 16, 16, 16 }
+		}
+		image
+		{
+			function = SHADOW
+			shadow   = OUT
+			detail   = "textview"
+			file     = "../images/CallEntry.png"
+			border   = { 16, 16, 16, 16 }
+		}
+
+		image {
+			function = SHADOW
+			file     = "../images/CallEntry.png"
+			border   = { 16, 16, 16, 16 }
+		}
+	}
+}
+widget "*.hildon-reversed-textview" style "fremantle-reversed-textview"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+# Special theming for the edit mode toolbar back button and action buttons
+
+style "edit-mode-toolbar"
+{
+	HildonEditToolbar::arrow-width  = 112
+	HildonEditToolbar::arrow-height = 56
+	
+	engine "sapwood" {
+		image {
+			function = FLAT_BOX
+			file = "../images/wmTitleBar.png"
+		}
+	}
+}
+class "HildonEditToolbar" style "edit-mode-toolbar"
+
+style "edit-toolbar-arrow"
+{
+	engine "sapwood" {
+		image {
+			function       = BOX
+			shadow         = IN
+			file           = "../images/wmRightButtonPressed.png"
+			overlay_file   = "../images/wmBackIconPressed.png"
+		}
+		image {
+			function       = BOX
+			#file           = "../images/wmRightButton.png"
+			overlay_file   = "../images/wmBackIcon.png"
+		}
+	}
+}
+widget "*.hildon-edit-toolbar-arrow" style "edit-toolbar-arrow"
+
+style "edit-toolbar-button"
+{
+	engine "sapwood" {
+		image {
+			function = BOX
+			shadow = IN
+			file = "../images/wmEditModeButtonPressed.png"
+			border = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			state = INSENSITIVE
+			file = "../images/wmEditModeButtonDisabled.png"
+			border = { 16, 16, 0, 0 }
+		}
+		image {
+			function = BOX
+			file = "../images/wmEditModeButtonNormal.png"
+			border = { 16, 16, 0, 0 }
+		}
+	}
+}
+# FIXME: This is not very efficient, but the only way to catch all buttons packed in an EditToolbar. Can't risk a regression...
+widget_class "*.<HildonEditToolbar>.*<GtkButton>" style "edit-toolbar-button"
+
+#################################################### 
+# GTK TOOLBAR
+#
+#################################################### 
+
+style "osso-toolbar"
+{
+  GtkToolbar::button-relief = GTK_RELIEF_NORMAL
+  GtkToolbar::shadow-type = GTK_SHADOW_NONE
+  GtkToolbar::max-child-expand = 800
+  GtkToolbar::space-size = 15
+  engine "sapwood"
+  {
+    image
+    {
+      function = BOX
+    }
+  }
+}
+class "GtkToolbar" style "osso-toolbar"
+
+style "osso-toolbar-separator"
+{
+	GtkWidget::separator-width = 15
+	GtkWidget::wide-separators = 1
+	engine "sapwood"
+	{	
+
+		image{
+			function = BOX
+			shadow = ETCHED_OUT
+			detail = "vseparator"
+			file = "../images/qgn_plat_toolbar_separator.png"
+		}
+		image{
+			function = BOX
+			shadow = ETCHED_OUT
+			detail = "hseparator"
+			file = "../images/qgn_plat_toolbar_separator.png"
+		}
+	}
+}
+class "GtkSeparatorToolItem" style "osso-toolbar-separator"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+#################################################### 
+# GTK TOOL BUTTON
+# 
+# Make sure the button appears "pushed" when the
+# button is active, but we are in PRELIGHT state.
+#################################################### 
+
+# default style:
+style "osso-toolbutton" {
+
+   GtkButton::child_displacement_x = 0
+   GtkButton::child_displacement_y = 0
+   GtkButton::minimum_width = 48
+#   GtkButton::minimum_height = 40
+
+   engine "sapwood" {
+
+      image
+      {
+          function          = FOCUS
+      }
+      image
+      {
+          function          = BOX
+	      state             = ACTIVE
+          file              = "../images/toolbar_button_pressed.png"
+	      border            = { 23, 23, 0, 0 }	
+      }
+      image
+      {
+          function          = BOX
+     	  state             = PRELIGHT
+	      shadow            = OUT
+          file              = "../images/toolbar_button_normal.png"
+          border            = { 23, 23, 0, 0 }	
+      }
+      image
+      {
+          function          = BOX
+    	  state             = PRELIGHT
+    	  shadow            = IN
+          file              = "../images/toolbar_button_pressed.png"
+    	  border            = { 23, 23, 0, 0 }	
+      }
+      image
+      {
+          function          = BOX
+    	  state             = INSENSITIVE
+          file              = "../images/toolbar_button_disabled.png"
+    	  border            = { 23, 23, 0, 0 }	
+      }
+      image
+      {
+          function          = BOX
+          file              = "../images/toolbar_button_normal.png"		             
+	      border            = { 23, 23, 0, 0 }	
+      }
+   }
+}
+
+widget_class "*.GtkToolButton.GtkButton" style "osso-toolbutton"
+widget_class "*.GtkToggleToolButton.GtkToggleButton" style "osso-toolbutton"
+widget_class "*.GtkMenuToolButton.GtkHBox.GtkButton" style "osso-toolbutton"
+widget_class "*.GtkMenuToolButton.GtkHBox.GtkToggleButton" style "osso-toolbutton"
+widget_class "*.GtkRadioToolButton.GtkRadioButton" style "osso-toolbutton"
+
+
+# The below two lines are mainly for Sketch application.
+# Especially the togglebutton thins is pretty interesting
+
+widget_class "*.GtkToolItem.HildonColorButton" style "osso-toolbutton"
+widget_class "*.GtkToolbar.GtkToggleButton" style "osso-toolbutton"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+#################################################### 
+# GTK TOGGLE BUTTON
+# 
+# Make sure the button appears "pushed" when the toggle
+# button is active, but we are in PRELIGHT state.
+#################################################### 
+
+# default style:
+style "osso-toggletoolbutton" {
+
+   engine "sapwood" {
+
+      image
+      {
+          function          = BOX
+              state             = ACTIVE
+          file              = "../images/toolbar_button_selected.png"
+          border            = { 23, 23, 0, 0 }	
+      }
+      image
+      {
+          function          = BOX
+          state             = PRELIGHT
+          shadow            = IN
+          file              = "../images/toolbar_button_selected.png"
+          border            = { 23, 23, 0, 0 }	
+      }
+   }
+}
+
+widget_class "*.GtkToolbar.GtkToggleToolButton.GtkToggleButton" style "osso-toggletoolbutton"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+# Theming for both GtkTreeView and GtkListView.
+
+style "osso-listview" = "osso-color-themeing"
+{
+  text[ACTIVE] = @DefaultTextColor
+  text[SELECTED] = @DefaultTextColor
+
+  GtkTreeView::horizontal-separator = 6
+  GtkTreeView::tree-view-separator-area = 15
+  GtkTreeView::row-ending-details = 1
+  GtkTreeView::separator-height = 3
+  GtkWidget::focus-line-width = 1
+
+  engine "sapwood"
+  {
+    image
+      {
+        function        = CHECK
+        state           = INSENSITIVE
+        shadow          = IN
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_disabled.png"
+        
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = CHECK
+        state           = SELECTED
+        shadow          = IN
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_focused.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = ACTIVE
+        shadow          = IN
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_focused.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = PRELIGHT
+        shadow          = IN
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_normal.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = NORMAL
+        shadow          = IN
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_normal.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = INSENSITIVE
+        shadow          = OUT
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_disabled.png"
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = CHECK
+        state           = SELECTED
+        shadow          = OUT
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_focused.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = ACTIVE
+        shadow          = OUT
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_focused.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = PRELIGHT
+        shadow          = OUT
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_normal.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      {
+        function        = CHECK
+        state           = NORMAL
+        shadow          = OUT
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_normal.png"
+        overlay_stretch = FALSE
+      }  
+    image
+      { 
+        function        = CHECK
+        state           = NORMAL
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_normal.png"
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = CHECK
+        state           = PRELIGHT
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_normal.png"
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = CHECK
+        state           = ACTIVE
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_normal.png"
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = CHECK
+        state           = SELECTED
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_selected_normal.png"
+        overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = CHECK
+        state           = INSENSITIVE
+        detail          = "cellcheck"
+        overlay_file    = "../images/qgn_plat_check_box_empty_normal.png"
+        overlay_stretch = FALSE
+      }
+    # selected row passive focus ######################################
+    image
+    {
+      function = FLAT_BOX
+      state    = SELECTED
+      shadow   = OUT
+      detail   = "*_start"
+
+      file = "../images/qgn_plat_focus_left_selection.png"
+      border = { 2, 0, 2, 2 }
+
+      overlay_file = "../images/qgn_plat_focus_left_passive.png"
+      overlay_border = { 2, 0, 2, 2 }
+    }		
+    image
+    {
+      function = FLAT_BOX
+      state    = SELECTED
+      shadow   = OUT
+      detail   = "*_middle"
+
+      file = "../images/qgn_plat_focus_middle_selection.png"
+      border = { 0, 0, 2, 2 }
+
+      overlay_file = "../images/qgn_plat_focus_middle_passive.png"
+      overlay_border = { 0, 0, 2, 2 }
+    }		
+    image
+    {
+      function = FLAT_BOX
+      state    = SELECTED
+      shadow   = OUT
+      detail   = "*_end"
+
+      file = "../images/qgn_plat_focus_right_selection.png"
+      border = { 0, 2, 2, 2 }
+
+      overlay_file = "../images/qgn_plat_focus_right_passive.png"
+      overlay_border = { 0, 2, 2, 2 }
+    }		
+    image
+    {
+      function = FLAT_BOX
+      state    = SELECTED
+      shadow   = OUT
+
+      file = "../images/qgn_plat_focus_selection.png"
+      border = { 2, 2, 2, 2 }
+
+      overlay_file = "../images/qgn_plat_focus_passive.png"
+      overlay_border = { 2, 2, 2, 2 }
+    }		
+    # selection #######################################################
+    image
+    {
+      function = FLAT_BOX
+      state    = SELECTED
+      detail   = "*_start"
+      file = "../images/qgn_plat_focus_left_selection.png"
+      border = { 2, 0, 2, 2 }
+    }
+    image
+    {
+      function = FLAT_BOX
+      state    = SELECTED
+      detail   = "*_middle"
+      file = "../images/qgn_plat_focus_middle_selection.png"
+      border = { 0, 0, 2, 2 }
+    }
+    image
+    {
+      function = FLAT_BOX
+      state    = SELECTED
+      detail = "*_end"
+      file = "../images/qgn_plat_focus_right_selection.png"
+      border = { 0, 2, 2, 2 }
+    }
+    image
+    {
+      function = FLAT_BOX
+      state    = SELECTED
+      file = "../images/qgn_plat_focus_selection.png"
+      border = { 2, 2, 2, 2 }
+    }
+    # normal row passive focus ########################################
+    image
+    {
+      function = FLAT_BOX
+      shadow   = OUT
+      detail   = "*_start"
+
+      overlay_file = "../images/qgn_plat_focus_left_passive.png"
+      overlay_border = { 2, 0, 2, 2 }
+    }		
+    image
+    {
+      function = FLAT_BOX
+      shadow   = OUT
+      detail   = "*_middle"
+
+      overlay_file = "../images/qgn_plat_focus_middle_passive.png"
+      overlay_border = { 0, 0, 2, 2 }
+    }		
+    image
+    {
+      function = FLAT_BOX
+      shadow   = OUT
+      detail   = "*_end"
+
+      overlay_file = "../images/qgn_plat_focus_right_passive.png"
+      overlay_border = { 0, 2, 2, 2 }
+    }		
+    image
+    {
+      function = FLAT_BOX
+      shadow   = OUT
+
+      overlay_file = "../images/qgn_plat_focus_passive.png"
+      overlay_border = { 2, 2, 2, 2 }
+    }		
+    # drop indicator ##################################################
+    image
+    {
+      function = FOCUS
+      detail = "treeview-drop-indicator-left"
+      file = "../images/qgn_plat_focus_left_selection_cursor.png"
+      border = { 2, 0, 2, 2 }
+    }
+    image
+    {
+      function = FOCUS
+      detail = "treeview-drop-indicator-middle"
+      file = "../images/qgn_plat_focus_middle_selection_cursor.png"
+      border = { 0, 0, 2, 2 }
+    }
+    image
+    {
+      function = FOCUS
+      detail = "treeview-drop-indicator-right"
+      file = "../images/qgn_plat_focus_right_selection_cursor.png"
+      border = { 0, 2, 2, 2 }
+    }
+    image
+    {
+      function = FOCUS
+      detail = "treeview-drop-indicator"
+      file = "../images/qgn_plat_focus_selection_cursor.png"
+      border = { 2, 2, 2, 2 }
+    }
+    # cursor ##########################################################
+    image
+    {
+      function = FOCUS
+      detail   = "*_start"
+      file = "../images/qgn_plat_focus_left_active.png"
+      border = { 2, 0, 2, 2 }
+    }
+    image
+    {
+      function = FOCUS
+      detail   = "*_middle"
+      file = "../images/qgn_plat_focus_middle_active.png"
+      border = { 0, 0, 2, 2 }
+    }
+    image
+    {
+      function = FOCUS
+      detail   = "*_end"
+      file = "../images/qgn_plat_focus_right_active.png"
+      border = { 0, 2, 2, 2 }
+    }
+    image
+    {
+      function = FOCUS
+    }
+    # Odd/even rules for non-sorted ###################################
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_even_ruled"
+
+      file = "../images/qgn_plat_tree_view_even.png"
+      border = { 2, 2, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_odd_ruled"
+
+      file = "../images/qgn_plat_tree_view_odd.png"
+      border = { 2, 2, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_even_ruled_start"
+
+      file = "../images/qgn_plat_tree_view_even_start.png"
+      border = { 2, 0, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_odd_ruled_start"
+
+      file = "../images/qgn_plat_tree_view_odd_start.png"
+      border = { 2, 0, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_even_ruled_middle"
+
+      file = "../images/qgn_plat_tree_view_even_middle.png"
+      border = { 0, 0, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_odd_ruled_middle"
+
+      file = "../images/qgn_plat_tree_view_odd_middle.png"
+      border = { 0, 0, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_even_ruled_end"
+
+      file = "../images/qgn_plat_tree_view_even_end.png"
+      border = { 0, 2, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_odd_ruled_end"
+
+      file = "../images/qgn_plat_tree_view_odd_end.png"
+      border = { 0, 2, 13, 13 }
+    }
+    # Odd/even for sorted #############################################
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_even_ruled_sorted"
+
+      file = "../images/qgn_plat_tree_view_even.png"
+      border = { 2, 2, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_odd_ruled_sorted"
+
+      file = "../images/qgn_plat_tree_view_odd.png"
+      border = { 2, 2, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_even_ruled_sorted_start"
+
+      file = "../images/qgn_plat_tree_view_even_start.png"
+      border = { 2, 0, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_odd_ruled_sorted_start"
+
+      file = "../images/qgn_plat_tree_view_odd_start.png"
+      border = { 2, 0, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_even_ruled_sorted_middle"
+
+      file = "../images/qgn_plat_tree_view_even_middle.png"
+      border = { 0, 0, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_odd_ruled_sorted_middle"
+
+      file = "../images/qgn_plat_tree_view_odd_middle.png"
+      border = { 0, 0, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_even_ruled_sorted_end"
+
+      file = "../images/qgn_plat_tree_view_even_end.png"
+      border = { 0, 2, 13, 13 }
+    }
+    image
+    { 
+      function = FLAT_BOX
+      state    = NORMAL
+      shadow   = NONE
+      detail   = "cell_odd_ruled_sorted_end"
+
+      file = "../images/qgn_plat_tree_view_odd_end.png"
+      border = { 0, 2, 13, 13 }
+    }
+  }
+}
+
+class "GtkTreeView" style "osso-listview"
+class "GtkListView" style "osso-listview"
+
+style "osso-listboxheader"
+{
+  GtkButton::separator-height = 15
+  engine "sapwood"
+    {
+      image
+        {
+	  function = BOX
+	  file = "../images/qgn_plat_column_listbox_header.png"
+	  border = { 2, 2, 2, 17 }
+	}
+      image
+        {
+	  function = FOCUS
+	  file = "../images/qgn_plat_column_listbox_header.png"
+	  border = { 2, 2, 2, 17 }
+	}
+    }
+}
+widget_class "*.GtkTreeView.GtkButton" style "osso-listboxheader"
+
+style "osso-treeviewcolumn-sortarrow" {
+	engine "sapwood" {
+		image {
+			function = ARROW
+			arrow_direction = DOWN
+			overlay_file = "../images/qgn_plat_arrow_listbox_header_down.png"
+		        overlay_stretch = FALSE
+		}
+		image {
+			function = ARROW
+			arrow_direction = UP
+			overlay_file = "../images/qgn_plat_arrow_listbox_header_up.png"
+		        overlay_stretch = FALSE
+		}
+	}
+}
+widget_class "*.GtkTreeView.GtkButton.GtkHBox.GtkArrow" style "osso-treeviewcolumn-sortarrow"
+
+style "fremantle-touchlist" {
+	GtkTreeView::row-ending-details = 0
+	GtkTreeView::row-height = 70
+
+	# HILDON_FREMANTLE == 1 here!
+	GtkWidget::hildon-mode = 1
+
+	engine "sapwood" {
+		image {
+			function = FLAT_BOX
+			state = SELECTED
+			detail = "cell_even"
+			file = "../images/TouchListBackgroundPressed.png"
+			border = { 4, 4, 0, 0}
+		}
+		image {
+			function = FLAT_BOX
+			detail = "cell_even"
+			file = "../images/TouchListBackgroundNormal.png"
+			border = { 4, 4, 0, 0}
+		}
+		
+		image {
+			function = FLAT_BOX
+			state = SELECTED
+			detail = "cell_odd"
+			file = "../images/TouchListBackgroundPressed.png"
+			border = { 4, 4, 0, 0}
+		}
+		image {
+			function = FLAT_BOX
+			detail = "cell_odd"
+			file = "../images/TouchListBackgroundNormal.png"
+			border = { 4, 4, 0, 0}
+		}
+		
+		image {
+			function = FLAT_BOX
+			state = SELECTED
+			detail = "*ruled"
+			file = "../images/TouchListBackgroundPressed.png"
+			border = { 4, 4, 0, 0}
+		}
+		image {
+			function = FLAT_BOX
+			detail = "*ruled"
+			file = "../images/TouchListBackgroundNormal.png"
+			border = { 4, 4, 0, 0}
+		}
+		
+		image {
+			function = FLAT_BOX
+			state = SELECTED
+			detail = "*sorted"
+			file = "../images/TouchListBackgroundPressed.png"
+			border = { 4, 4, 0, 0}
+		}
+		image {
+			function = FLAT_BOX
+			detail = "*sorted"
+			file = "../images/TouchListBackgroundNormal.png"
+			border = { 4, 4, 0, 0}
+		}
+		
+		image { # Do not draw focus at all.
+			function = FOCUS
+		}
+	}
+}
+widget_class "*.<HildonPannableArea>.<GtkTreeView>" style "fremantle-touchlist"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+
+####################################################
+#
+# Style for the menutoolbuttonarrow
+#
+####################################################
+
+# Commenting this stuff out for a little while
+
+#style "osso-menutoolbuttonarrow" {
+#
+#    engine "sapwood" {
+#        image {
+#            function = FOCUS
+#            file = "../images/qgn_plat_toolbar_menu_button_pressed.png"
+#            state = ACTIVE
+#        }
+#        image {
+#            function = FOCUS
+#            file = "../images/qgn_plat_toolbar_menu_button_normal.png"
+#        }
+#        image {
+#            function = BOX
+#            file = "../images/qgn_plat_toolbar_menu_button_disabled.png"
+#            state = INSENSITIVE
+#        }
+#        image {
+#            function = BOX
+#            file = "../images/qgn_plat_toolbar_menu_button_pressed.png"
+#            state = ACTIVE
+#        }
+#        image {
+#            function = BOX
+#            file = "../images/qgn_plat_toolbar_menu_button_normal.png"
+#        }
+#        image {
+#            function = TAB
+#        }
+#    }
+#}
+
+#widget "*.GtkMenuToolButton.GtkHBox.GtkToggleButton.GtkArrow" style "osso-menutoolbuttonarrow"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-expander" {
+
+  GtkExpander::expander-spacing = 6
+  GtkExpander::expander-size = 26
+
+  ythickness = 0
+  xthickness = 0
+
+  engine "sapwood" {	
+    image {
+    	function = ARROW
+    	state = PRELIGHT
+        detail = "expander"
+	arrow_direction = RIGHT
+	overlay_file    = "../images/qgn_plat_arrow_expander_focused.png"
+	overlay_stretch = FALSE
+    }
+    image {
+    	function = ARROW
+    	state = PRELIGHT
+        detail = "expander"
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_arrow_expander_down_focused.png"
+	overlay_stretch = FALSE
+    }
+    image {
+    	function = ARROW
+    	state = NORMAL
+        detail = "expander"
+	arrow_direction = RIGHT
+	overlay_file    = "../images/qgn_plat_arrow_expander_normal.png"
+	overlay_stretch = FALSE
+    }
+    image {
+    	function = ARROW
+    	state = NORMAL
+        detail = "expander"
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_arrow_expander_down_normal.png"
+	overlay_stretch = FALSE
+    }
+    image {
+    	function = ARROW
+    	state = INSENSITIVE
+        detail = "expander"
+	arrow_direction = RIGHT
+	overlay_file    = "../images/qgn_plat_arrow_expander_disabled.png"
+	overlay_stretch = FALSE
+    }
+    image {
+    	function = ARROW
+    	state = INSENSITIVE
+        detail = "expander"
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_arrow_expander_down_disabled.png"
+	overlay_stretch = FALSE
+    }
+  }
+
+}
+
+class "GtkExpander" style "osso-expander"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-completion-frame"
+{
+  xthickness = 6
+  ythickness = 6
+}
+
+widget "hildon-completion-window.GtkFrame" style "osso-completion-frame"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+####################################################
+# Theming for GtkViewPort
+####################################################
+
+# Disable the shadow painting completely
+
+style "osso-viewport" {
+  xthickness = 0
+  ythickness = 0
+
+  engine "sapwood" {
+    image {
+      function = SHADOW
+    }
+  }
+}
+
+class "GtkViewport" style "osso-viewport"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+style "hildon-icon-view-style" = "osso-color-themeing"
+{
+	text[NORMAL] = @DefaultTextColor
+	text[PRELIGHT] = @DefaultTextColor
+	text[ACTIVE] = @DefaultTextColor
+	text[SELECTED] = @DefaultTextColor
+	text[INSENSITIVE] = @DefaultTextColor
+
+	engine "sapwood"
+	{
+		shadowcolor = @ReversedTextColor
+	
+		image { 
+			function = FLAT_BOX
+			file = "../images/RoundedSelection.png"
+			border = { 6, 6, 6, 6 }
+		}
+	}
+}
+class "GtkIconView" style "hildon-icon-view-style"
+
+style "fremantle-touchgrid" = "hildon-icon-view-style"
+{
+	GtkWidget::hildon-mode = 1    # HILDON_FREMANTLE
+}
+widget_class "*.<HildonPannableArea>.<GtkIconView>" style "fremantle-touchgrid"
+# FIXME: temporary work around for control panel, GtkIconView should always be a direct child of pannable area
+class "HCPGrid" style "fremantle-touchgrid"
+
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license 
+
+style "osso-combobox-base" = "osso-logical-colors" {
+	base[NORMAL] = @ComboboxBackgroundColor
+
+	GtkWidget::focus-line-width = 5
+	GtkWidget::focus-padding = 5
+	#GtkWidget::focus-line-pattern = "\0\0\0\0\0\0\0\0"
+	GtkComboBox::autodimmed_button = 1
+	GtkComboBox::appears-as-list = 1
+	GtkComboBox::arrow-size = 30
+	GtkComboBox::has-frame = 1
+}
+class "GtkComboBox" style "osso-combobox-base"
+
+###################################################
+#
+# Styles for non-entry ComboBox
+#
+###################################################
+
+style "osso-combobox-arrow"
+{
+        GtkArrow::arrow-scaling = 1.0
+
+        engine "sapwood"
+        {
+                image 
+                {
+                        function = ARROW
+                        state = INSENSITIVE
+                        overlay_file = "../images/combobox_arrow_disabled.png"
+                        overlay_stretch = FALSE
+                }
+                image 
+                 {
+                        function = ARROW
+                        state = ACTIVE
+                        overlay_file = "../images/combobox_arrow_pressed.png"
+                        overlay_stretch = FALSE
+                }
+                image 
+                {
+                        function = ARROW
+                        overlay_file = "../images/combobox_arrow_normal.png"
+                        overlay_stretch = FALSE
+                }
+        }
+}
+widget_class "*.<GtkComboBox>.GtkToggleButton.GtkArrow" style "osso-combobox-arrow"
+
+style "osso-combobox-frame" {
+    xthickness = 5
+    ythickness = 5
+
+    engine "sapwood" {
+    	image {
+            function = SHADOW
+            state = INSENSITIVE
+            file = "../images/combobox_frame_disabled.png"
+            border = { 14, 14, 14, 14 }
+        }
+    
+        image {
+            function = SHADOW
+            file = "../images/combobox_frame_normal.png"
+            border = { 14, 14, 14, 14 }
+        }
+    }
+}
+widget_class "*.<GtkComboBox>.GtkFrame" style "osso-combobox-frame"
+
+style "osso-combobox-button" {
+    GtkButton::child-displacement-x = 0
+    GtkButton::child-displacement-y = 0
+    xthickness = 0
+    ythickness = 0
+    GtkWidget::interior-focus = 1
+
+    engine "sapwood" {
+        image {
+            function = BOX
+            shadow = IN
+            file = "../images/combobox_button_pressed.png"
+	          border = { 14, 14, 14, 14 }
+        }
+        image {
+            function = BOX
+            file = "../images/combobox_button_disabled.png"
+            state = INSENSITIVE
+	          border = { 14, 14, 14, 14 }
+        }
+        image {
+            function = BOX
+            file = "../images/combobox_button_normal.png"
+	          border = { 14, 14, 14, 14 }
+        }
+        image {
+            function = TAB
+        }
+    }
+}
+widget_class "*.<GtkComboBox>.GtkToggleButton" style "osso-combobox-button"
+
+###################################################
+#
+# Styles for ComboBoxEntry
+#
+###################################################
+
+# We have a base style for combobox-entry too, because we
+# might have a different looking search combobox.
+
+style "osso-combobox-entry-base" {
+    xthickness = 0
+    ythickness = 0
+    GtkEntry::inner-border = { 4, 4, 0, 0 }
+    GtkComboBox::arrow-size = 30
+}
+widget_class "*.<GtkComboBoxEntry>.GtkEntry" style "osso-combobox-entry-base"
+
+style "osso-combobox-entry-entry" = "osso-color-themeing" {
+    xthickness = 8
+    ythickness = 8
+    
+    GtkWidget::interior-focus = 1
+    GtkEntry::inner-border = { 0, 0, 0, 0 }
+    GtkEntry::state-hint = 1
+    
+    text[NORMAL] = @ReversedTextColor
+
+    engine "sapwood"
+    {
+        image
+        {
+            function = SHADOW
+            state    = INSENSITIVE
+            file = "../images/combobox_entry_disabled.png"
+            border   = { 8, 8, 8, 8 }
+        }
+        image
+        {
+            function = SHADOW
+            state    = ACTIVE
+            file = "../images/combobox_entry_focused.png"
+            border   = { 8, 8, 8, 8 }
+        }
+        image
+        {
+            function = SHADOW
+            file = "../images/combobox_entry_normal.png"
+            border   = { 8, 8, 8, 8 }
+        }
+        
+        image
+        {
+            function = FLAT_BOX
+            state    = INSENSITIVE
+            file = "../images/combobox_entry_disabled_center.png"
+        }
+        image
+        {
+            function = FLAT_BOX
+            state    = ACTIVE
+            file = "../images/combobox_entry_focused_center.png"
+        }
+        image
+        {
+            function = FLAT_BOX
+            file = "../images/combobox_entry_normal_center.png"
+        }
+    }
+}
+widget_class "*.<GtkComboBoxEntry>.<GtkEntry>" style  "osso-combobox-entry-entry"
+
+style "osso-combobox-entry-button" {
+        xthickness = 0
+        ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = FOCUS
+		}
+		image {
+			function = BOX
+			file = "../images/combobox_entry_button_disabled.png"
+			state = INSENSITIVE
+			border = { 2, 14, 14, 14 }
+		}
+		image {
+			function = BOX
+			shadow = IN
+			file = "../images/combobox_entry_button_pressed.png"
+			border = { 2, 14, 14, 14 }
+		}
+		image {
+			function = BOX
+			file = "../images/combobox_entry_button_normal.png"
+			border = { 2, 14, 14, 14 }
+		}
+		image {
+			function = TAB
+		}
+	}
+}
+widget_class "*.<GtkComboBoxEntry>.GtkToggleButton" style "osso-combobox-entry-button"
+
+
+# Special fremantle combobox themeing (used by browser UI)
+
+style "fremantle-combobox-entry-entry" = "osso-color-themeing" {
+	xthickness = 16
+	ythickness = 0
+
+	GtkWidget::interior-focus = 1
+	GtkEntry::inner-border = { 0, 0, 16, 16 }
+	GtkEntry::state-hint = 1
+
+	text[NORMAL] = @ReversedTextColor
+
+	engine "sapwood" {
+	        image {
+			function = SHADOW
+			state = INSENSITIVE
+			file = "../images/ComboBoxTextInputLFrameDisabled.png"
+			border = { 16, 16, 16, 16 }
+		}
+		image {
+			function = SHADOW
+			state = ACTIVE
+			file = "../images/ComboBoxTextInputLFrameFocused.png"
+			border = { 16, 16, 16, 16 }
+		}
+		image {
+			function = SHADOW
+			state = NORMAL
+			file = "../images/ComboBoxTextInputLFrame.png"
+			border = { 16, 16, 16, 16 }
+		}
+
+                image {
+			function = FLAT_BOX
+			shadow = NONE
+			state = INSENSITIVE
+			file = "../images/ComboBoxTextInputDisabled.png"
+			border = { 0, 0, 16, 16 }
+		}
+		image {
+			function = FLAT_BOX
+			shadow = NONE
+			state = ACTIVE
+			file = "../images/ComboBoxTextInputFocused.png"
+			border = { 0, 0, 16, 16 }
+		}
+		image {
+			function = FLAT_BOX
+			shadow = NONE
+			state = NORMAL
+			file = "../images/ComboBoxTextInput.png"
+			border = { 0, 0, 16, 16 }
+		}
+		image
+		{
+			function = BOX
+			detail = "entry-progress"
+			file = "../images/TextInputProgress.png"
+			border = { 12, 12, 18, 18 }
+		}
+	}
+}
+widget "*.hildon-combobox.HildonEntry-finger" style  "fremantle-combobox-entry-entry"
+
+# Special style for the combobox button when the entry has focused, for the unified look
+style "fremantle-combobox-entry-active-button" {
+	xthickness = 0
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = FOCUS
+		}
+		image {
+			function = BOX
+			state = INSENSITIVE
+			file = "../images/ComboBoxTextInputRFrameFocused.png"
+			border = { 16, 16, 16, 16 }
+			overlay_file = "../images/ComboBoxButtonDisabled.png"
+		}
+		image {
+			function = BOX
+			shadow = IN
+			file = "../images/ComboBoxTextInputRFrameFocused.png"
+			border = { 16, 16, 16, 16 }
+			overlay_file = "../images/ComboBoxButtonPressed.png"
+		}
+		image {
+			function = BOX
+			file = "../images/ComboBoxTextInputRFrameFocused.png"
+			border = { 16, 16, 16, 16 }
+			overlay_file = "../images/ComboBoxButtonNormal.png"
+		}
+	}
+}
+widget "*.hildon-combobox-active-button" style  "fremantle-combobox-entry-active-button"
+
+# Disabled button only used by Qt styling so far.
+style "fremantle-combobox-entry-disabled-button" {
+	xthickness = 0
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = FOCUS
+		}
+		image {
+			function = BOX
+			file = "../images/ComboBoxTextInputRFrameDisabled.png"
+			border = { 16, 16, 16, 16 }
+		}
+	}
+}
+widget "*.hildon-combobox-disabled-button" style  "fremantle-combobox-entry-disabled-button"
+
+
+style "fremantle-combobox-entry-button" {
+	xthickness = 0
+	ythickness = 0
+
+	engine "sapwood" {
+		image {
+			function = FOCUS
+		}
+		
+		image {
+			function = BOX
+			state = INSENSITIVE
+			file = "../images/ComboBoxTextInputRFrame.png"
+			border = { 16, 16, 16, 16 }
+			overlay_file = "../images/ComboBoxButtonDisabled.png"
+		}
+		image {
+			function = BOX
+			shadow = IN
+			file = "../images/ComboBoxTextInputRFrame.png"
+			border = { 16, 16, 16 ,16 }
+			overlay_file = "../images/ComboBoxButtonPressed.png"
+		}
+		image {
+			function = BOX
+			file = "../images/ComboBoxTextInputRFrame.png"
+			border = { 16, 16, 16 ,16 }
+			overlay_file = "../images/ComboBoxButtonNormal.png"
+		}
+	}
+}
+widget "*.hildon-combobox-button" style  "fremantle-combobox-entry-button"
+
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+#################################################### 
+# OSSO app pictures
+#################################################### 
+
+style "fremantle-app-menu" {
+	HildonAppMenu::vertical-spacing = 0
+	HildonAppMenu::horizontal-spacing = 0
+	HildonAppMenu::inner-border = 0
+	HildonAppMenu::external-border = 52
+}
+class "HildonAppMenu" style "fremantle-app-menu"
+class "HDStatusMenu" style "fremantle-app-menu"
+class "SuiPowerkeyMenu" style "fremantle-app-menu"
+
+style "osso-window-background" {
+	HildonAppview::border-width = 0
+	HildonWindow::borders = { 0, 0, 0, 0 }
+	HildonWindow::toolbar-borders = { 0, 0, 0, 0 }
+	
+	engine "sapwood" {
+		image {
+			function = BOX
+			state = NORMAL
+			detail = "toolbar-primary"
+			file = "../images/ToolbarPrimaryBackground.png"
+		}
+		image {
+			function = BOX
+			detail = "toolbar-secondary"
+			file = "../images/ToolbarSecondaryBackground.png"
+		}
+		image {
+			function = BOX
+			detail = "toolbar-edit-mode"
+			file = "../images/wmTitleBar.png"
+		}
+	}
+}
+class "HildonWindow" style "osso-window-background"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+##############################
+# HildonCandidateBox
+##############################
+style "osso-candidate-box"
+{
+	fg[NORMAL] = "#aaaaaa"
+	fg[ACTIVE] = "#aaaaaa"
+	fg[INSENSITIVE] = "#aaaaaa"
+	fg[PRELIGHT] = "#aaaaaa"
+	bg[INSENSITIVE] = "#cccccc"
+	bg[NORMAL] = "#cccccc"
+	bg[ACTIVE] = "#cccccc"
+	bg[PRELIGHT] = "#cccccc"
+	xthickness = 0
+	ythickness = 0
+}
+widget_class "*HildonCandidateBox" style "osso-candidate-box"
+
+style "osso-candidate-box-menu"
+{
+	GtkMenu::double_arrows = 1
+	GtkWidget::focus-padding = 0
+	GtkWidget::focus-line-width = 0
+	GtkMenu::vertical-padding = 0
+	GtkMenu::horizontal-padding = 0
+	GtkContainer::border-width = 0
+	xthickness = 0
+	ythickness = 0
+}
+widget "*hildon-candidate-box-menu" style "osso-candidate-box-menu"
+
+style "osso-candidate-box-menu-item"
+{ 
+	GtkMenuItem::include_arrow_in_focus = 0
+	GtkMenuItem::separator_height = 5
+	GtkMenuItem::horizontal-padding = 0
+	GtkWidget::has-focus = TRUE
+	GtkWidget::focus-padding = 0
+	GtkWidget::focus-line-width = 0
+	GtkMenuItem::arrow-spacing = 0
+	GtkContainer::border-width = 0
+	xthickness = 0
+	ythickness = 0
+}													  
+widget "*hildon-candidate-box-menu-item" style "osso-candidate-box-menu-item"
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+style "osso-caption-control"
+{
+  ythickness = 1
+}
+class "HildonCaption" style "osso-caption-control"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+style "colorchoosar"
+{
+  HildonColorChooser::outer-border = { 3, 3, 3, 3 }
+
+  HildonColorChooser::inner-size = { 202, 202, 26, 18 }
+  HildonColorChooser::graphic-border = { 3, 3, 3, 3 }
+
+
+}
+class "HildonColorChooser" style "colorchoosar"
+
+
+style "chooserdialog"
+{
+  HildonColorChooserDialog::radio-sizes = { 26, 26, 0, 3 }
+  HildonColorChooserDialog::container-sizes = { 18, 12, 6, 0 }
+
+  HildonColorChooserDialog::num-buttons = { 8, 2, 8, 4 }
+
+  HildonColorChooserDialog::defined-color0  = "#000000"
+  HildonColorChooserDialog::defined-color1  = "#660000"
+  HildonColorChooserDialog::defined-color2  = "#0000FF"
+  HildonColorChooserDialog::defined-color3  = "#FF00FF"
+  HildonColorChooserDialog::defined-color4  = "#006600"
+  HildonColorChooserDialog::defined-color5  = "#666600"
+  HildonColorChooserDialog::defined-color6  = "#666666"
+  HildonColorChooserDialog::defined-color7  = "#FF0000"
+  HildonColorChooserDialog::defined-color8  = "#00FFFF"
+  HildonColorChooserDialog::defined-color9  = "#FFFFFF"
+  HildonColorChooserDialog::defined-color10 = "#00FF00"
+  HildonColorChooserDialog::defined-color11 = "#FFFF00"
+
+  HildonColorChooserDialog::defined-color12 = "#000066"
+  HildonColorChooserDialog::defined-color13 = "#660066"
+  HildonColorChooserDialog::defined-color14 = "#006666"
+  HildonColorChooserDialog::defined-color15 = "#CCCCCC"
+
+  HildonColorChooserDialog::default-color = "#ffffff"
+
+
+}
+class "HildonColorChooserDialog" style "chooserdialog"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+#################################################### 
+# HILDON CONTROLBAR
+# 
+# Theming instructions for HildonControlbar -widget
+#
+#################################################### 
+
+style "osso-controlbar"
+{
+	HildonControlbar::stepper_size = 0
+	HildonControlbar::slider_width = 40
+	HildonControlbar::stepper_spacing = 0
+	HildonControlbar::trough_border = 0
+	GtkScale::slider_length = 60
+	HildonControlbar::autodimmed_steppers = 1
+	HildonControlbar::inner_border_width = 0
+	GtkWidget::focus-line-width = 0
+	GtkWidget::focus-padding = 0
+	GtkRange::draw_trough_under_steppers = 0
+
+	engine "sapwood" {
+		#
+		# At first, lets override some gtkrange specific things
+		#
+		image {
+			function = BOX
+			detail = "stepper"
+		}
+		#image {
+		#	function = SLIDER
+		#}
+
+		#
+		# Then, lets define our osso specific things
+		#
+		
+		# Controlbar frame borders
+			image {
+			function = BOX
+			detail = "trough"
+			state = INSENSITIVE
+			}
+			image {
+			function = BOX
+			detail = "trough"
+		}
+		image {
+			function = SLIDER
+			}
+		
+		# Controlbar blocks
+		image {
+			function = BOX
+			shadow = IN
+			detail = "hildon_block"
+			state = INSENSITIVE
+			file = "../images/ControlBarActiveDisabled.png"
+			border = { 7, 7, 29, 29 }
+		}
+		image {
+			function = BOX
+			shadow = IN
+			detail = "hildon_block"
+			file = "../images/ControlBarActive.png"
+			border = { 7, 7, 29, 29 }
+		}
+		image {
+			function = BOX
+			shadow = OUT
+			detail = "hildon_block"
+			state = INSENSITIVE
+			file = "../images/ControlBarPassiveDisabled.png"
+			border = { 7, 7, 29, 29 }
+		}
+		image {
+			function = BOX
+			shadow = OUT
+			detail = "hildon_block"
+			file = "../images/ControlBarPassive.png"
+			border = { 7, 7, 29, 29 }
+		}
+	}
+}
+class "HildonControlbar" style "osso-controlbar"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+style "fremantle-progressnote"
+{
+	engine "sapwood" {
+		image {
+			function = FLAT_BOX
+			file     = "../images/wmDialog.png"
+			border   = {16, 16, 46, 0}
+		}
+	}
+}
+widget "HildonNote-progressbar" style "fremantle-progressnote"
+
+style "fremantle-confirmation"
+{
+	engine "sapwood" {
+		image {
+			function = FLAT_BOX
+			file     = "../images/wmConfirmationNote.png"
+			border   = {16, 16, 16, 16}
+		}
+	}
+}
+widget "HildonNote-confirmation" style "fremantle-confirmation"
+widget "HildonNote-confirmation-button" style "fremantle-confirmation"
+
+style "fremantle-note"
+{
+	engine "sapwood" {
+		image {
+			function = FLAT_BOX
+			file     = "../images/wmBanner.png"
+			border   = {0, 0, 8, 8}
+		}
+	}
+}
+widget "HildonNote-information-theme" style "fremantle-note"
+widget "HildonBanner-information" style "fremantle-note"
+widget "HildonBanner-animation" style "fremantle-note"
+widget "HildonBanner-progress" style "fremantle-note"
+
+style "fremantle-note-portrait"
+{
+	engine "sapwood" {
+		image {
+			function = FLAT_BOX
+			file     = "../images/wmBannerPortrait.png"
+			border   = {0, 0, 8, 8}
+		}
+	}
+}
+widget "HildonNote-information-theme-portrait" style "fremantle-note-portrait"
+widget "HildonBanner-information-portrait" style "fremantle-note-portrait"
+widget "HildonBanner-animation-portrait" style "fremantle-note-portrait"
+widget "HildonBanner-progress-portrait" style "fremantle-note-portrait"
+
+style "fremantle-note-label" = "osso-color-themeing"
+{
+	fg[NORMAL] = @ReversedTextColor
+	
+	engine "sapwood" {
+		shadowcolor = @DefaultTextColor
+	}
+}
+widget "*.HildonNoteLabel-information-theme" style "fremantle-note-label"
+widget "*.HildonBannerLabel-information" style "fremantle-note-label"
+widget "*.HildonBannerLabel-animation" style "fremantle-note-label"
+widget "*.HildonBannerLabel-progress" style "fremantle-note-label"
+widget "*.HildonNoteLabel-information-theme-portrait" style "fremantle-note-label"
+widget "*.HildonBannerLabel-information-portrait" style "fremantle-note-label"
+widget "*.HildonBannerLabel-animation-portrait" style "fremantle-note-label"
+widget "*.HildonBannerLabel-progress-portrait" style "fremantle-note-label"
+
+# Call UI active call BG:
+style "fremantle-call-banner"
+{
+	engine "sapwood" {
+		image {
+			function = BOX
+			file     = "../images/CallBanner.png"
+			border   = {0, 0, 20, 20}
+		}
+	}
+}
+widget "*.hildon-call-banner" style "fremantle-call-banner"
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+####################################################
+#HILDON NUMBER EDITOR
+#
+#
+####################################################
+style "osso-number-editor"
+{
+  xthickness = 0
+  ythickness = 0
+}
+class "HildonNumberEditor" style "osso-number-editor"
+
+style "osso-number-editor-plus"
+{
+  GtkButton::default_border = { 0, 0, 0, 0 }
+  GtkButton::child-displacement-y = 0
+  GtkButton::child-displacement-x = 0
+  xthickness = 0
+  ythickness = 0
+
+  engine "sapwood"
+  {
+    image
+  	{
+  	  function = BOX
+          state = NORMAL
+  	  file = "../images/qgn_plat_number_editor_more_normal.png"
+  	}
+    image
+  	{
+  	  function = BOX
+          state = SELECTED
+  	  file = "../images/qgn_plat_number_editor_more_normal.png"
+  	}
+    image
+  	{
+  	  function = BOX
+          state = PRELIGHT
+  	  file = "../images/qgn_plat_number_editor_more_normal.png"
+  	}
+  	image
+  	{
+  	  function = BOX
+          state = INSENSITIVE
+  	  file = "../images/qgn_plat_number_editor_more_disabled.png"
+  	}
+  	image
+  	{
+  	  function = BOX
+          state = ACTIVE
+  	  file = "../images/qgn_plat_number_editor_more_pressed.png"
+  	}
+  }
+}
+
+widget "*.ne-plus-button" style "osso-number-editor-plus"
+
+style "osso-number-editor-minus"
+{
+  GtkButton::default_border = { 0, 0, 0, 0 }
+  GtkButton::child-displacement-y = 0
+  GtkButton::child-displacement-x = 0
+  xthickness = 0
+  ythickness = 0
+
+  engine "sapwood"
+  {
+    image
+  	{
+  	  function = BOX
+          state = NORMAL
+  	  file = "../images/qgn_plat_number_editor_less_normal.png"
+  	}
+    image
+  	{
+  	  function = BOX
+          state = SELECTED
+  	  file = "../images/qgn_plat_number_editor_less_normal.png"
+  	}
+    image
+  	{
+  	  function = BOX
+          state = PRELIGHT
+  	  file = "../images/qgn_plat_number_editor_less_normal.png"
+  	}
+  	image
+  	{
+  	  function = BOX
+          state = INSENSITIVE
+  	  file = "../images/qgn_plat_number_editor_less_disabled.png"
+  	}
+  	image
+  	{
+  	  function = BOX
+          state = ACTIVE
+  	  file = "../images/qgn_plat_number_editor_less_pressed.png"
+  	}
+  }
+}
+
+widget "*.ne-minus-button" style "osso-number-editor-minus"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+#################################################### 
+# HILDON THUMB SCROLLBAR
+#
+#################################################### 
+
+style "hildon-thumb-scrollbar"
+{
+  GtkRange::stepper_size = 52
+  GtkRange::stepper_spacing = 0
+  GtkRange::trough_border = 0
+  GtkRange::slider_width = 64
+  GtkRange::draw_trough_under_steppers = 0
+  GtkRange::draw_trough = 0
+  GtkRange::arrow_displacement_x = 0
+  GtkRange::arrow_displacement_y = 0
+  GtkRange::autodimmed_steppers = 1
+  GtkScrollbar::min-slider-length = 32
+  GtkRange::activate-slider = 1
+  
+  engine "sapwood"
+  {
+    image
+      {
+        function        = BOX
+	orientation     = VERTICAL
+	state		= INSENSITIVE
+	file            = "../images/qgn_plat_scroll_thumbsize_vertical_shaft_disabled.png"
+	border          = { 0, 0, 15, 15 }
+      }
+    image
+      {
+        function        = SLIDER
+	orientation     = VERTICAL
+	state		= INSENSITIVE
+	file            = "../images/qgn_plat_scroll_thumbsize_vertical_thumb_disabled.png"
+	border		= { 0, 0, 15, 15 }
+      }
+    image
+      {
+        function        = BOX
+	orientation     = VERTICAL
+	file            = "../images/qgn_plat_scroll_thumbsize_vertical_shaft_normal.png"
+	border          = { 0, 0, 15, 15 }
+      }
+    image
+      {
+        function        = SLIDER
+	orientation     = VERTICAL
+        state           = ACTIVE
+	file            = "../images/qgn_plat_scroll_thumbsize_vertical_thumb_pressed.png"
+	border		= { 0, 0, 15, 15 }
+      }
+    image
+      {
+        function        = SLIDER
+	orientation     = VERTICAL
+	file            = "../images/qgn_plat_scroll_thumbsize_vertical_thumb_normal.png"
+	border		= { 0, 0, 15, 15 }
+      }
+    # up
+    image
+      {
+        function        = STEPPER
+	state           = ACTIVE
+	arrow_direction = UP
+	overlay_file    = "../images/qgn_plat_scroll_thumbsize_vertical_up_arrow_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = STEPPER
+	state           = SELECTED
+	arrow_direction = UP
+	overlay_file    = "../images/qgn_plat_scroll_thumbsize_vertical_up_arrow_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = STEPPER
+	state           = INSENSITIVE
+	arrow_direction = UP
+	overlay_file    = "../images/qgn_plat_scroll_thumbsize_vertical_up_arrow_disabled.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = STEPPER
+	arrow_direction = UP
+	overlay_file    = "../images/qgn_plat_scroll_thumbsize_vertical_up_arrow_normal.png"
+	overlay_stretch = FALSE
+      }
+    
+    # down
+    image
+      {
+        function        = STEPPER
+	state           = ACTIVE
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_scroll_thumbsize_vertical_down_arrow_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = STEPPER
+	state           = SELECTED
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_scroll_thumbsize_vertical_down_arrow_pressed.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = STEPPER
+	state           = INSENSITIVE
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_scroll_thumbsize_vertical_down_arrow_disabled.png"
+	overlay_stretch = FALSE
+      }
+    image
+      {
+        function        = STEPPER
+	arrow_direction = DOWN
+	overlay_file    = "../images/qgn_plat_scroll_thumbsize_vertical_down_arrow_normal.png"
+	overlay_stretch = FALSE
+      }
+  }
+}
+
+widget "*.hildon-thumb-scrollbar" style "hildon-thumb-scrollbar"
+
+
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+####################################################  
+# Hildon Time Picker
+#
+#
+#################################################### 
+
+style "osso-time-picker-up" {
+
+  engine "sapwood" {
+    image {
+      function = BOX
+      state = ACTIVE
+      overlay_file = "../images/qgn_plat_arrow_up_pressed.png"
+      overlay_stretch = FALSE
+    }
+    image {
+      function = BOX
+      overlay_file = "../images/qgn_plat_arrow_up_normal.png"
+      overlay_stretch = FALSE
+    }
+  }
+}
+widget "*.hildon-time-picker-up" style "osso-time-picker-up"
+
+style "osso-time-picker-down" {
+
+  engine "sapwood" {
+    image {
+      function = BOX
+      state = ACTIVE
+      overlay_file = "../images/qgn_plat_arrow_down_pressed.png"
+      overlay_stretch = FALSE
+    }
+    image {
+      function = BOX
+      overlay_file = "../images/qgn_plat_arrow_down_normal.png"
+      overlay_stretch = FALSE
+    }
+  }
+}
+widget "*.hildon-time-picker-down" style "osso-time-picker-down"
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+########################################################
+# Hildon Weekday Picker
+########################################################
+
+style "osso-weekday" {
+
+    xthickness = 6
+    ythickness = 4
+    
+    engine "sapwood" {
+        image {
+             function = BOX
+             state = NORMAL
+             file = "../images/qgn_plat_weekday_picker_normal.png"
+             border = { 2, 2, 0, 0 }
+       }
+       image {
+            function = BOX
+            state = ACTIVE
+            file = "../images/qgn_plat_weekday_picker_pressed.png"
+            border = { 2, 2, 0, 0}
+       }
+    }
+}
+
+widget_class "*.HildonWeekdayPicker.GtkToggleButton" style "osso-weekday"
+
+widget_class "*.HildonWeekdayPicker.GtkToggleButton.GtkLabel" style "osso-SmallFont"
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+# deprecated, remove me
+
+# Copyright Nokia Corporation 2007
+# Licensed under Creative Commons Attribution-ShareAlike 2.5 license
+
+widget "osso-SystemFont" style "osso-SystemFont"
+widget "osso-EmpSystemFont" style "osso-EmpSystemFont"
+widget "osso-TitleFont" style "osso-TitleFont"
+widget "osso-ButtonFont" style "osso-ButtonFont"
+widget "osso-SmallFont" style "osso-SmallFont"
+widget "osso-LargeFont" style "osso-LargeFont"
+widget "osso-HWRFont1" style "osso-HWRFont1"
+widget "osso-HWRFont2" style "osso-HWRFont2"
+
+widget "SystemFont" style "SystemFont"
+widget "EmpSystemFont" style "EmpSystemFont"
+widget "XXX-LargeSystemFont" style "XXX-LargeSystemFont"
+widget "XX-LargeSystemFont" style "XX-LargeSystemFont"
+widget "X-LargeSystemFont" style "X-LargeSystemFont"
+widget "LargeSystemFont" style "LargeSystemFont"
+widget "SmallSystemFont" style "SmallSystemFont"
+widget "EmpSmallSystemFont" style "EmpSmallSystemFont"
+widget "HomeSystemFont" style "HomeSystemFont"
+
+# Setting default font style
+class "GtkWidget" style "SystemFont"
+
+####
+# To be moved :
+####
+
+style "Toolbar_max_expand"
+{
+GtkToolbar::max_child_expand = 48
+}
+
+class "GtkWidget" style "Toolbar_max_expand"
+
+# Generated from hildon-theme-layout-5 version 0.15.0

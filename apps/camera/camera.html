@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<script type="text/javascript" src="../../js/jquery-1.7.2.js"></script>
+<title>Camera</title>
+<style>
+html {
+	font-family: arial;
+}
+@-webkit-keyframes glowRed {
+  from {
+    box-shadow: rgba(255, 0, 0, 0) 0 0 0;
+  }
+  50% {
+    box-shadow: rgba(255, 0, 0, 1) 0 0 15px 1px;
+  }
+  to {
+    box-shadow: rgba(255, 0, 0, 0) 0 0 0;
+  }
+}
+html, body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  -webkit-justify-content: center;
+  box-sizing: border-box;
+}
+article {
+  text-align: center;
+}
+#monitor {
+  /*-webkit-transform: scaleX(-1);*/
+  height: 100%;
+  width: 100%;
+  /*-webkit-box-reflect: below 20px -webkit-linear-gradient(top, transparent, transparent 80%, rgba(255,255,255,0.2));*/
+}
+#live {
+  position: absolute;
+  z-index: 1;
+  color: white;
+  font-weight: 600;
+  font-family: Arial;
+  font-size: 16pt;
+  right: 35px;
+  top: 20px;
+  text-shadow: 1px 1px red;
+  letter-spacing: 1px;
+}
+#live:before {
+  content: '';
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background: red;
+  position: absolute;
+  left: -20px;
+  margin-top: 5px;
+}
+#capture {
+  position: absolute;
+  z-index: 1;
+  color: white;
+  font-weight: 600;
+  font-family: Arial;
+  font-size: 16pt;
+  right: 35px;
+  top: 200px;
+  text-shadow: 1px 1px red;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+#preview {
+  position: absolute;
+  z-index: 5;
+  color: white;
+  font-weight: 600;
+  font-family: Arial;
+  font-size: 16pt;
+  right: 35px;
+  top: 0;
+  text-shadow: 1px 1px red;
+  letter-spacing: 1px;
+  width:100%;
+  height:100%;
+  display:none;
+}
+#gallery img {
+  position: absolute;
+  z-index: -1;
+  height: 75px;
+}
+#gallery img {
+  float: left;
+  height: 75px;
+}
+.container {
+  position: relative;
+}
+.blur {
+  -webkit-filter: blur(3px);
+}
+.brightness {
+  -webkit-filter: brightness(5);
+}
+.contrast {
+  -webkit-filter: contrast(8);
+}
+.hue-rotate {
+  -webkit-filter: hue-rotate(90deg);
+}
+.hue-rotate2 {
+  -webkit-filter: hue-rotate(180deg);
+}
+.hue-rotate3 {
+  -webkit-filter: hue-rotate(270deg);
+}
+.saturate {
+  -webkit-filter: saturate(10);
+}
+.grayscale {
+  -webkit-filter: grayscale(1);
+}
+.sepia {
+  -webkit-filter: sepia(1);
+}
+.invert {
+  -webkit-filter: invert(1)
+}
+</style>
+</head>
+<body>
+<article>
+ <section id="app">
+  <div class="container">
+    <span id="live">LIVE</span>
+    <span id="capture" onclick="snapshot()">TAKE PHOTO</span>
+    <video id="monitor" autoplay onclick="changeFilter(this)" title="Click me to see different filters"></video>
+  </div>
+ </section>
+</article>
+<div id="preview">
+	<img id="photo" src="" />
+</div>
+<canvas id="canvas" style="display:none;"></canvas>
+<script>
+navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.getUserMedia;
+window.URL = window.URL || window.webkitURL;
+
+var app = document.getElementById('app');
+var video = document.getElementById('monitor');
+var canvas = document.getElementById('photo');
+var effect = document.getElementById('effect');
+var gallery = document.getElementById('gallery');
+var intervalId = null;
+var idx = 0;
+var videoStream = null;
+var filters = [
+  'grayscale',
+  'sepia',
+  'blur',
+  'brightness',
+  'contrast',
+  'hue-rotate', 'hue-rotate2', 'hue-rotate3',
+  'saturate',
+  'invert',
+  ''
+];
+
+function changeFilter(el) {
+  el.className = '';
+  var effect = filters[idx++ % filters.length];
+  if (effect) {
+    el.classList.add(effect);
+  }
+}
+
+function gotStream(stream) {
+  videoStream = stream;
+  if (window.URL) {
+    video.src = window.URL.createObjectURL(stream);
+  } else {
+    video.src = stream; // Opera.
+  }
+
+  video.onerror = function(e) {
+    stream.stop();
+  };
+
+  stream.onended = noStream;
+
+  // Since video.onloadedmetadata isn't firing for getUserMedia video, we have
+  // to fake it.
+  setTimeout(function() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+  }, 50);
+}
+
+function noStream(e) {
+  var msg = 'No camera available.';
+  if (e.code == 1) {
+    msg = 'User denied access to use camera.';
+  }
+  document.getElementById('errorMessage').textContent = msg;
+}
+
+function snapshot() {
+  canvas = document.getElementById('canvas');
+  canvas.width = jQuery(document).width();
+  canvas.height = jQuery(document).height();
+  var ctx = canvas.getContext('2d');
+  if (videoStream) {
+    ctx.drawImage(video, 0, 0);
+    // "image/webp" works in Chrome 18. In other browsers, this will fall back to image/png.
+    document.getElementById('photo').src = canvas.toDataURL('image/webp');
+    document.getElementById('photo').width = jQuery(document).width();
+    document.getElementById('photo').height = jQuery(document).height();
+    jQuery('#preview').show();
+    jQuery('#preview').click(function(){
+    	jQuery('#preview').hide();
+    });
+  }
+}
+
+jQuery(document).ready(function(){
+  if (!navigator.getUserMedia) {
+    document.getElementById('errorMessage').innerHTML = 'Sorry. <code>navigator.getUserMedia()</code> is not available.';
+    return;
+  }
+  navigator.getUserMedia({video: true}, gotStream, noStream);
+});
+
+window.addEventListener('keydown', function(e) {
+  if (e.keyCode == 27) { // ESC
+    document.querySelector('details').open = false;
+  }
+}, false);
+</script>
+</body>
+</html>

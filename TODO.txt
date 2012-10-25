@@ -1,0 +1,17 @@
+sdk:
+* make rotate by menu item
+
+main:
+* app list with transparent div above it to make sure the click is received
+* alarm clock
+* battery
+* widgets on homescreen
+
+
+apps:
+* calculcator
+* browser
+* maps
+* terminal that can run htop and vim
+* gemakkelijke grafieken opbouwen over een periode van tijd
+* widget die laat zien dat je de kat moet eten geven, en simpel aanduiden dat het ok is -> gaat weg

@@ -1,0 +1,4 @@
+{
+  "theme": "humanity",
+  "startup": ["widgets/clock"]
+}
