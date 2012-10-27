@@ -15,21 +15,21 @@ $ /Path/To/nw .
 ````
 # Screenshots
 
-### main screen:
+### Home screen:
 
 ![alt text](https://raw.github.com/krispypen/WaemoJS/master/screenshots/screenshot1.png "screenshot1")
 
 
-### menu:
+### Application menu:
 
 ![alt text](https://raw.github.com/krispypen/WaemoJS/master/screenshots/screenshot2.png "screenshot2")
 
 
-### calculator app:
+### Calculator app:
 
 ![alt text](https://raw.github.com/krispypen/WaemoJS/master/screenshots/screenshot3.png "screenshot3")
 
 
-### window list:
+### Running apps switcher:
 
 ![alt text](https://raw.github.com/krispypen/WaemoJS/master/screenshots/screenshot4.png "screenshot4")
