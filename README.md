@@ -1,8 +1,9 @@
-# WaemoJS
-
 # Introduction
 
-Webkit + Maemo UX + NodeJS: A simple proof of concept Web based UI for mobile phones and tablets
+Offcourse this is not a full tutorial how you can create a new OS. This is a simple proof of concept explaining how "easy" it can be these days.
+
+Alsmost every phone/tablet can run a webkit browser. And on some its possible to run only a webkit browser and nothing else (see nemo mobile). This is the reason I started to create a proof of concept of my favorite user interface: Maemo. I called it WaemoJS. It uses html5 to create the gui based on Maemo, and it uses nodejs for getting system things like battery status, talking to the phone controller, reading the filesystem, taking a picture. These functions are not yet implemented at the time of writing :).
+
 
 # How to run
 
